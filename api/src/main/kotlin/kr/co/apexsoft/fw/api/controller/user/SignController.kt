@@ -37,28 +37,10 @@ class SignController(
         return ResponseEntity.ok(userLoginService.login(signIn))
     }
 
-
-    @Operation(summary = "캡챠 성공 후처리")
-    @GetMapping("/captcha/success")
-    fun resetPasswordCnt(@RequestParam("userId") userId: String): ResponseEntity<UserOut>? {
-        return ResponseEntity.ok(userCommandService.unlockUser(userId))
-    }
-
     @Operation(summary = "비밀번호 찾기")
     @GetMapping("/find/password")
     fun findPassword(@RequestParam userId: String) {
         userCommandService.findPassword(userId)
-    }
-
-    @Operation(summary = "초기 비밀번호 변경")
-    @PatchMapping("/{oid}/change-init-password")
-    fun changeInitPassword(
-        @PathVariable("oid") oid: Long,
-        @RequestBody passwordIn: PasswordIn
-    ): ResponseEntity<Nothing> {
-        SecurityUtil.checkUserOid(oid)
-        userCommandService.changePassword(oid, passwordIn)
-        return ResponseEntity.noContent().build()
     }
 
     @Operation(summary = "비밀번호 찾기 이후 비밀번호 재설정")
@@ -78,6 +60,22 @@ class SignController(
         // return ResponseEntity.ok(Role.values().map { EnumValue(it) })
     }
 
+//    @Operation(summary = "캡챠 성공 후처리")
+//    @GetMapping("/captcha/success")
+//    fun resetPasswordCnt(@RequestParam("userId") userId: String): ResponseEntity<UserOut>? {
+//        return ResponseEntity.ok(userCommandService.unlockUser(userId))
+//    }
+
+//    @Operation(summary = "초기 비밀번호 변경")
+//    @PatchMapping("/{oid}/change-init-password")
+//    fun changeInitPassword(
+//        @PathVariable("oid") oid: Long,
+//        @RequestBody passwordIn: PasswordIn
+//    ): ResponseEntity<Nothing> {
+//        SecurityUtil.checkUserOid(oid)
+//        userCommandService.changePassword(oid, passwordIn)
+//        return ResponseEntity.noContent().build()
+//    }
 
 //    @Operation(summary = "이메일, 아이디 중복체크")
 //    @GetMapping("/sign-up/check")

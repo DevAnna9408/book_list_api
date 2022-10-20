@@ -5,7 +5,6 @@ import kr.co.apexsoft.fw.domain.model.user.User
 import org.springframework.security.crypto.password.PasswordEncoder
 
 data class SignUpIn(
-    val role: Role,
     val userId: String,
     val password: String,
 ) {

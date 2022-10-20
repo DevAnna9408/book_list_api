@@ -36,7 +36,6 @@ class UserCommandService(
             val msg = e.message ?: throw RuntimeException(defaultMsg)
             when {
                 msg.contains("USER_ID") -> throw IllegalArgumentException("이미 사용 중인 사용자 아이디 입니다.")
-                msg.contains("EMAIL") -> throw IllegalArgumentException("이미 사용 중인 이메일 입니다.")
                 else -> throw RuntimeException(defaultMsg)
             }
         }

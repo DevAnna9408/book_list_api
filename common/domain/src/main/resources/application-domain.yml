@@ -1,0 +1,92 @@
+spring:
+  datasource:
+    platform: h2
+    url: jdbc:h2:mem:webFW;DB_CLOSE_ON_EXIT=TRUE;MODE=MYSQL
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        format_sql: false
+
+--- # develop
+spring:
+  config:
+    activate:
+      on-profile: "develop"
+  datasource:
+    url: jdbc:mysql://localhost:3306/book_list_dev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: admin
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: false
+    properties.hibernate:
+      format_sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+
+
+--- # test모드
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  datasource:
+    url:
+    username:
+    password:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jpa:
+      properties.hibernate:
+      hibernate:
+        ddl-auto: none
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+  decorator:
+    datasource:
+      p6spy:
+        enable-logging: false
+
+
+--- # product 운영모드
+spring:
+  config:
+    activate:
+      on-profile: "product"
+  datasource:
+    url:
+    username:
+    password:
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties.hibernate:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: false
+
+
+--- # initdb
+spring:
+  config:
+    activate:
+      on-profile: "initdb"

@@ -2,6 +2,7 @@ package kr.co.apexsoft.fw.domain.model.book
 
 import kr.co.apexsoft.fw.domain._common.AbstractEntity
 import kr.co.apexsoft.fw.domain.converter.BooleanToYNConverter
+import kr.co.apexsoft.fw.domain.model.bookmark.Bookmark
 import kr.co.apexsoft.fw.domain.model.user.User
 import javax.persistence.*
 
@@ -21,18 +22,21 @@ class Book (
     private val title: String,
 
     @Column(name = "THUMBS_UP")
-    private val thumbsUp: Int,
+    private val thumbsUp: Int = 0,
 
     @Column(name = "THUMBS_DOWN")
-    private val thumbsDown: Int,
+    private val thumbsDown: Int = 0,
 
     @Convert(converter = BooleanToYNConverter::class)
     @Column(name = "DELETED")
-    private val deleted: Boolean,
+    private val deleted: Boolean = false,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_USER")
-    private val postUser: User
+    private val postUser: User,
+
+    @OneToMany(mappedBy = "book")
+    val bookmarkList: MutableList<Bookmark> = mutableListOf()
 
     ) : AbstractEntity(oid) {
 
@@ -43,5 +47,6 @@ class Book (
     fun thumbsDown() = thumbsDown
     fun deleted() = deleted
     fun postUser() = postUser
+    fun isMarked() = bookmarkList.find { it.bookmarkUser().oid == oid }
 
 }

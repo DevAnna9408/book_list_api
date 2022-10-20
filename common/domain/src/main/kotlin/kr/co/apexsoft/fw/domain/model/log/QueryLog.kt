@@ -4,7 +4,7 @@ import kr.co.apexsoft.fw.domain._common.AbstractEntity
 import javax.persistence.*
 
 @Entity
-@Table( name = "QUERY_LOG")
+@Table( name = "B_QUERY_LOG")
 class QueryLog(
     oid: Long? = null,
 

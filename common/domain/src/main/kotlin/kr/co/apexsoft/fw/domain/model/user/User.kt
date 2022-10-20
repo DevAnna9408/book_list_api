@@ -11,7 +11,7 @@ import javax.persistence.*
  */
 @Entity
 @Table(
-    name = "USER",
+    name = "B_USER",
     indexes = [
         Index(name = "IDX_USER__USER_ID", columnList = "USER_ID", unique = true),
     ]

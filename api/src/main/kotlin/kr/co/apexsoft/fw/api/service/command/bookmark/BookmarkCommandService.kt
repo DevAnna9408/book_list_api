@@ -21,6 +21,9 @@ class BookmarkCommandService (
     fun createBookmark(userOid: Long, bookOid: Long) {
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
+
+        if (bookmarkRepository.checkIsAlreadyExists(dbUser.oid!!, dbBook.oid!!) > 0) throw RuntimeException(MessageUtil.getMessage("ALREADY_EXIST"))
+
         try {
             bookmarkRepository.save(BookmarkIn.toEntity(dbUser, dbBook))
         } catch (
@@ -29,5 +32,21 @@ class BookmarkCommandService (
             e.stackTrace.toString()
             throw RuntimeException(MessageUtil.getMessage("ERROR"))
         }
+    }
+
+    fun deleteBookmark(userOid: Long, bookOid: Long) {
+        val dbBookmark = bookmarkRepository.getByUserOidAndBookOid(userOid, bookOid)
+
+        try {
+            bookmarkRepository.delete(dbBookmark!!)
+        } catch (
+            e: RuntimeException
+        ) {
+            e.stackTrace.toString()
+            throw RuntimeException(MessageUtil.getMessage("ERROR_DELETE_BOOKMARK") + " " + MessageUtil.getMessage("JUST_MSG"))
+
+        }
+
+
     }
 }

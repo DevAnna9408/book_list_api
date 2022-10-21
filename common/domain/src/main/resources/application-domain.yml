@@ -1,3 +1,22 @@
+spring:
+  datasource:
+    platform: h2
+    url: jdbc:mysql://localhost:3306/book_list_dev?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: admin
+    driverClassName: org.h2.Driver
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        format_sql: false
+
 --- # develop
 spring:
   config:
@@ -13,7 +32,7 @@ spring:
     properties.hibernate:
       format_sql: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl

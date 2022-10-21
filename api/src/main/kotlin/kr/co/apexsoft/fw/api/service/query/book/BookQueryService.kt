@@ -1,7 +1,9 @@
 package kr.co.apexsoft.fw.api.service.query.book
 
 import kr.co.apexsoft.fw.api.dto.book.BookOut
+import kr.co.apexsoft.fw.api.dto.book.PostCountAndThumbsUpOut
 import kr.co.apexsoft.fw.domain.repository.book.BookRepository
+import kr.co.apexsoft.fw.domain.repository.bookmark.BookmarkRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -12,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class BookQueryService(
 
-    private val bookRepository: BookRepository
+    private val bookRepository: BookRepository,
+    private val bookmarkRepository: BookmarkRepository
 
 ) {
 
@@ -27,6 +30,20 @@ class BookQueryService(
             sort,
             pageable
         ).map { BookOut.fromEntity(it) }
+    }
+
+    fun getPostCountAndThumbsUp(userOid: Long): PostCountAndThumbsUpOut {
+
+        val count = bookRepository.getByUserOid(userOid).size
+        val thumbs = bookRepository.getByUserOid(userOid).sumBy { it.thumbsUp() }
+        val bookmark = bookmarkRepository.getByUserOid(userOid).size
+
+        return PostCountAndThumbsUpOut(
+            postCount = count,
+            thumbsUp = thumbs,
+            bookmark = bookmark
+        )
+
     }
 
 }

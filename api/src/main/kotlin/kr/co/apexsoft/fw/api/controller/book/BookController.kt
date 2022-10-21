@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import kr.co.apexsoft.fw.api.dto.book.BookIn
 import kr.co.apexsoft.fw.api.dto.book.BookOut
+import kr.co.apexsoft.fw.api.dto.book.PostCountAndThumbsUpOut
 import kr.co.apexsoft.fw.api.service.command.book.BookCommandService
 import kr.co.apexsoft.fw.api.service.query.book.BookQueryService
 import org.springdoc.api.annotations.ParameterObject
@@ -49,5 +50,13 @@ class BookController (
             sort,
             pageable
         ))
+    }
+
+    @Operation(summary = "내가 쓴 글과 받은 추천 수 집계")
+    @GetMapping("/post-count-and-thumb-up")
+    fun getPostCountAndThumbsUp(
+        @RequestParam("userOid") userOid: Long
+    ): ResponseEntity<PostCountAndThumbsUpOut> {
+        return ResponseEntity.ok(bookQueryService.getPostCountAndThumbsUp(userOid))
     }
 }

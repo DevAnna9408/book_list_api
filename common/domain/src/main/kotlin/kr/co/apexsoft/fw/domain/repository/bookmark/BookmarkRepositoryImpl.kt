@@ -57,6 +57,14 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
             .fetchCount()
     }
 
+    override fun getByUserOid(userOid: Long): List<Bookmark> {
+        return from(qBookmark)
+            .where(
+                qBookmark.bookmarkUser.oid.eq(userOid)
+            )
+            .fetch() ?: emptyList()
+    }
+
     private fun eqIsWritten(isWritten: Boolean, userOid: Long): BooleanExpression? {
         return if (!isWritten) null
         else qBookmark.book.postUser.oid.eq(userOid)

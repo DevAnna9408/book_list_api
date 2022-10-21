@@ -52,6 +52,27 @@ class BookController (
         ))
     }
 
+    @Operation(summary = "내가 쓴 책 목록 조회")
+    @GetMapping("/my-list")
+    fun getAllMyBookList(
+        @RequestParam("userOid") userOid: Long,
+        @RequestParam("sortParam") sortParam: Boolean,
+        @RequestParam("reverse") reverse: Boolean,
+        @ParameterObject pageable: Pageable
+    ): ResponseEntity<Page<BookOut>> {
+        val sort = when(sortParam) {
+            true -> Sort.by(Sort.Order.asc("thumbsUp"))
+            else -> Sort.by(Sort.Order.asc("thumbsDown"))
+        }
+        return ResponseEntity.ok(bookQueryService.getAllMyBookList(
+            userOid,
+            sortParam,
+            reverse,
+            sort,
+            pageable
+        ))
+    }
+
     @Operation(summary = "내가 쓴 글과 받은 추천 수 집계")
     @GetMapping("/post-count-and-thumb-up")
     fun getPostCountAndThumbsUp(

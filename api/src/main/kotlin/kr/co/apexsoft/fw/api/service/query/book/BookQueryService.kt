@@ -32,6 +32,23 @@ class BookQueryService(
         ).map { BookOut.fromEntity(it) }
     }
 
+    fun getAllMyBookList(
+        userOid: Long,
+        sortParam: Boolean,
+        reverse: Boolean,
+        sort: Sort,
+        pageable: Pageable): Page<BookOut> {
+        return bookRepository.getAllMyBookList(
+            userOid,
+            sortParam,
+            reverse,
+            sort,
+            pageable
+        ).map { BookOut.fromEntity(it) }
+    }
+
+
+
     fun getPostCountAndThumbsUp(userOid: Long): PostCountAndThumbsUpOut {
 
         val count = bookRepository.getByUserOid(userOid).size

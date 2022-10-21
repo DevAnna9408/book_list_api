@@ -67,6 +67,60 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
 
     }
 
+    override fun getAllMyBookList(
+        userOid: Long,
+        sortParam: Boolean,
+        reverse: Boolean,
+        sort: Sort,
+        pageable: Pageable
+    ): Page<Book> {
+        val result = if (reverse) {
+            from(qBook)
+                .where(
+                    qBook.deleted.isFalse,
+                    qBook.thumbsDown.lt(10),
+                    qBook.postUser.oid.eq(userOid)
+                )
+                .orderBy(
+                    *sort.map {
+                        OrderSpecifier(
+                            if (it.isAscending) Order.ASC else Order.DESC,
+                            Expressions.path(String::class.java, qBook, it.property)
+                        )
+                    }
+                        .toList().toTypedArray()
+                )
+                .orderBy(
+                    qBook.createdTime.desc()
+                )
+                .fetchAll()
+        } else {
+            from(qBook)
+                .where(
+                    qBook.deleted.isFalse,
+                    qBook.thumbsDown.lt(10)
+                )
+                .orderBy(
+                    *sort.map {
+                        OrderSpecifier(
+                            if (it.isAscending) Order.ASC else Order.DESC,
+                            Expressions.path(String::class.java, qBook, it.property)
+                        )
+                    }
+                        .toList().toTypedArray()
+                )
+                .orderBy(
+                    qBook.createdTime.asc()
+                )
+                .fetchAll()
+
+        }
+
+
+        val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
+        return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
+    }
+
     override fun getByOid(bookOid: Long): Book {
         return from(qBook)
             .where(

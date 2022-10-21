@@ -71,8 +71,10 @@ class User(
         this.failCnt = n.failCnt
         this.locked = n.locked
         this.roles = n.roles
+    }
 
-
+    fun deleteUser() {
+        this.status = Status.INACTIVE
     }
 
 

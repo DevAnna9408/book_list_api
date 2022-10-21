@@ -4,6 +4,7 @@ import kr.co.apexsoft.fw.api.dto.user.*
 import kr.co.apexsoft.fw.domain.model.user.User
 import kr.co.apexsoft.fw.domain.repository.user.UserRepository
 import kr.co.apexsoft.fw.lib.security.jwt.JwtGenerator
+import kr.co.apexsoft.fw.lib.utils.MessageUtil
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -41,6 +42,19 @@ class UserCommandService(
         }
         return UserSimpleOut.fromEntity(user)
     }
+
+    fun deleteUser(userOid: Long) {
+        val dbUser = userRepository.getByOid(userOid)
+        try {
+            dbUser.deleteUser()
+        } catch (
+            e: RuntimeException
+        ) {
+            e.stackTrace.toString()
+            throw RuntimeException(MessageUtil.getMessage("DELETE_USER") + " " + MessageUtil.getMessage("JUST_MSG"))
+        }
+    }
+
 
     fun saveUser(oid: Long, userUpdateIn: UserUpdateIn): UserSimpleOut {
         val dbUser = userRepository.getByOid(oid)
@@ -131,7 +145,6 @@ class UserCommandService(
     fun isUseUserId(userId: String): Boolean {
         return userRepository.findByUserId(userId).isPresent
     }
-
 //    @Transactional(readOnly = true)
 //    fun isUse(type: String, value: String?): Boolean? {
 //        if (type == "userId")

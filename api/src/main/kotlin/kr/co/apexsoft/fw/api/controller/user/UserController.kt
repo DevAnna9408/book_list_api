@@ -23,6 +23,16 @@ class UserController(
         return ResponseEntity.ok(userCommandService.resetPassword(oid))
     }
 
+    @Operation(summary = "회원탈퇴")
+    @DeleteMapping("/{userOid}")
+    fun deleteUser(
+        @PathVariable("userOid") userOid: Long
+    ): ResponseEntity<Nothing> {
+        SecurityUtil.checkUserOid(userOid)
+        userCommandService.deleteUser(userOid)
+        return ResponseEntity.noContent().build()
+    }
+
 //    @Operation(summary = "회원 정보 수정")
 //    @PutMapping("/{oid}")
 //    fun save(

@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -20,7 +21,7 @@ abstract class AbstractEntity(
 
     @CreatedDate
     @Column(name = "CREATED_DATE", updatable = false, columnDefinition = "DATETIME")
-    protected lateinit var createdTime: LocalDateTime
+    protected lateinit var createdTime: LocalDate
 
 
     @Column(name = "CREATED_BY", updatable = false)
@@ -29,7 +30,7 @@ abstract class AbstractEntity(
 
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_DATE",columnDefinition = "DATETIME")
-    protected lateinit var lastModifiedTime: LocalDateTime
+    protected lateinit var lastModifiedTime: LocalDate
 
     @Column(name = "LAST_MODIFIED_BY", updatable = true)
     @LastModifiedBy

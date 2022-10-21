@@ -8,7 +8,6 @@ data class BookOut(
     val title: String,
     val thumbsUp: Int,
     val thumbsDown: Int,
-    val isMarked: Boolean
 ) {
     companion object {
         fun fromEntity(e: Book): BookOut {
@@ -17,11 +16,7 @@ data class BookOut(
                 author = e.author(),
                 title = e.title(),
                 thumbsUp = e.thumbsUp(),
-                thumbsDown = e.thumbsDown(),
-                isMarked = when(e.isMarked()) {
-                    null -> false
-                    else -> true
-                }
+                thumbsDown = e.thumbsDown()
             )
         }
     }

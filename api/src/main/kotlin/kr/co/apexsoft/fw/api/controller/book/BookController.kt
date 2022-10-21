@@ -6,6 +6,10 @@ import kr.co.apexsoft.fw.api.dto.book.BookIn
 import kr.co.apexsoft.fw.api.dto.book.BookOut
 import kr.co.apexsoft.fw.api.service.command.book.BookCommandService
 import kr.co.apexsoft.fw.api.service.query.book.BookQueryService
+import org.springdoc.api.annotations.ParameterObject
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -30,7 +34,20 @@ class BookController (
 
     @Operation(summary = "모든 책 목록 조회")
     @GetMapping("/list")
-    fun getAllBookList(): ResponseEntity<List<BookOut>> {
-        return ResponseEntity.ok(bookQueryService.getAllBookList())
+    fun getAllBookList(
+        @RequestParam("sortParam") sortParam: Boolean,
+        @RequestParam("reverse") reverse: Boolean,
+        @ParameterObject pageable: Pageable
+    ): ResponseEntity<Page<BookOut>> {
+        val sort = when(sortParam) {
+            true -> Sort.by(Sort.Order.asc("thumbsUp"))
+            else -> Sort.by(Sort.Order.asc("thumbsDown"))
+        }
+        return ResponseEntity.ok(bookQueryService.getAllBookList(
+            sortParam,
+            reverse,
+            sort,
+            pageable
+        ))
     }
 }

@@ -35,9 +35,6 @@ class Book (
     @JoinColumn(name = "POST_USER")
     private val postUser: User,
 
-    @OneToMany(mappedBy = "book")
-    val bookmarkList: MutableList<Bookmark> = mutableListOf()
-
     ) : AbstractEntity(oid) {
 
     fun content() = content
@@ -47,6 +44,5 @@ class Book (
     fun thumbsDown() = thumbsDown
     fun deleted() = deleted
     fun postUser() = postUser
-    fun isMarked() = bookmarkList.find { it.bookmarkUser().oid == oid }
 
 }

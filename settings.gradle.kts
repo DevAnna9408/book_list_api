@@ -7,6 +7,6 @@
  * in the user manual at https://docs.gradle.org/7.0.2/userguide/multi_project_builds.html
  */
 
-rootProject.name = "apex-fw"
+rootProject.name = "book_list_api"
 include("common:domain", "common:lib")
 include("api")

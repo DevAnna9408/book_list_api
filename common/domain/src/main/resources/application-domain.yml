@@ -1,22 +1,3 @@
-spring:
-  datasource:
-    platform: h2
-    url: jdbc:h2:mem:webFW;DB_CLOSE_ON_EXIT=TRUE;MODE=MYSQL
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
-  jpa:
-    show-sql: false
-    open-in-view: false
-    hibernate:
-      ddl-auto: create-drop
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-    properties:
-      hibernate:
-        format_sql: false
-
 --- # develop
 spring:
   config:

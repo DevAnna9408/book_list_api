@@ -9,7 +9,6 @@ data class BookmarkOut(
     val title: String,
     val thumbsUp: Int,
     val thumbsDown: Int,
-    val markedUserOid: Long
 ) {
     companion object {
         fun fromEntity(e: Bookmark): BookmarkOut {
@@ -20,7 +19,6 @@ data class BookmarkOut(
                 title = e.book().title(),
                 thumbsUp = e.book().thumbsUp(),
                 thumbsDown = e.book().thumbsDown(),
-                markedUserOid = e.bookmarkUser().oid!!
             )
         }
     }

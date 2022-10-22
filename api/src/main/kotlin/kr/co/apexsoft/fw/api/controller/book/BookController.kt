@@ -33,6 +33,26 @@ class BookController (
         return ResponseEntity.noContent().build()
     }
 
+    @Operation(summary = "추천")
+    @PutMapping("/thumbs-up")
+    fun thumbsUp(
+        @RequestParam ("userOid") userOid: Long,
+        @RequestParam ("bookOid") bookOid: Long
+    ): ResponseEntity<Nothing> {
+        bookCommandService.thumbsUp(userOid, bookOid)
+        return ResponseEntity.noContent().build()
+    }
+
+    @Operation(summary = "비추천")
+    @PutMapping("/thumbs-down")
+    fun thumbsDown(
+        @RequestParam ("userOid") userOid: Long,
+        @RequestParam ("bookOid") bookOid: Long
+    ): ResponseEntity<Nothing> {
+        bookCommandService.thumbsDown(userOid, bookOid)
+        return ResponseEntity.noContent().build()
+    }
+
     @Operation(summary = "모든 책 목록 조회")
     @GetMapping("/list")
     fun getAllBookList(

@@ -1,8 +1,10 @@
 package kr.co.apexsoft.fw.api.service.command.book
 
 import kr.co.apexsoft.fw.api.dto.book.BookIn
+import kr.co.apexsoft.fw.api.dto.book.BookThumbIn
 import kr.co.apexsoft.fw.api.dto.bookmark.BookmarkIn
 import kr.co.apexsoft.fw.domain.repository.book.BookRepository
+import kr.co.apexsoft.fw.domain.repository.book.BookThumbRepository
 import kr.co.apexsoft.fw.domain.repository.bookmark.BookmarkRepository
 import kr.co.apexsoft.fw.domain.repository.user.UserRepository
 import kr.co.apexsoft.fw.lib.utils.MessageUtil
@@ -15,7 +17,8 @@ class BookCommandService (
 
     private val userRepository: UserRepository,
     private val bookRepository: BookRepository,
-    private val bookmarkRepository: BookmarkRepository
+    private val bookmarkRepository: BookmarkRepository,
+    private val bookThumbRepository: BookThumbRepository
 
         ) {
 
@@ -34,5 +37,46 @@ class BookCommandService (
             throw RuntimeException(MessageUtil.getMessage("ERROR"))
         }
         bookmarkRepository.save(BookmarkIn.toEntity(dbUser, book))
+    }
+
+    fun thumbsUp(userOid: Long, bookOid: Long) {
+        val dbUser = userRepository.getByOid(userOid)
+        val dbBook = bookRepository.getByOid(bookOid)
+
+        if (bookThumbRepository.getByUserOidAndUp(userOid, bookOid) > 0) {
+            throw RuntimeException(MessageUtil.getMessage("ALREADY_UP"))
+        } else {
+            try {
+                dbBook._thumbsUp()
+                bookThumbRepository.save(BookThumbIn(true).toEntity(
+                    dbUser, dbBook
+                ))
+            } catch (
+                e: RuntimeException
+            ) {
+                e.stackTrace.toString()
+                throw RuntimeException(MessageUtil.getMessage("ERROR"))
+            }
+        }
+    }
+
+    fun thumbsDown(userOid: Long, bookOid: Long) {
+        val dbUser = userRepository.getByOid(userOid)
+        val dbBook = bookRepository.getByOid(bookOid)
+        if (bookThumbRepository.getByUserOidAndDown(userOid, bookOid) > 0) {
+            throw RuntimeException(MessageUtil.getMessage("ALREADY_DOWN"))
+        } else {
+            try {
+                dbBook._thumbsDown()
+                bookThumbRepository.save(BookThumbIn(false).toEntity(
+                    dbUser, dbBook
+                ))
+            } catch (
+                e: RuntimeException
+            ) {
+                e.stackTrace.toString()
+                throw RuntimeException(MessageUtil.getMessage("ERROR"))
+            }
+        }
     }
 }

@@ -22,14 +22,14 @@ class Book (
     private val title: String,
 
     @Column(name = "THUMBS_UP")
-    private val thumbsUp: Int = 0,
+    private var thumbsUp: Int = 0,
 
     @Column(name = "THUMBS_DOWN")
-    private val thumbsDown: Int = 0,
+    private var thumbsDown: Int = 0,
 
     @Convert(converter = BooleanToYNConverter::class)
     @Column(name = "DELETED")
-    private val deleted: Boolean = false,
+    private var deleted: Boolean = false,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_USER")
@@ -44,5 +44,17 @@ class Book (
     fun thumbsDown() = thumbsDown
     fun deleted() = deleted
     fun postUser() = postUser
+
+    fun _thumbsUp() {
+        this.thumbsUp += 1
+    }
+
+    fun _thumbsDown() {
+        this.thumbsDown += 1
+    }
+
+    fun deleteBook() {
+        this.deleted = true
+    }
 
 }

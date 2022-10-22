@@ -33,6 +33,16 @@ class BookController (
         return ResponseEntity.noContent().build()
     }
 
+    @Operation(summary = "책 삭제")
+    @DeleteMapping
+    fun deleteBook(
+        @RequestParam("userOid") userOid: Long,
+        @RequestParam("bookOid") bookOid: Long
+    ): ResponseEntity<Nothing> {
+        bookCommandService.deleteBook(userOid, bookOid)
+        return ResponseEntity.noContent().build()
+    }
+
     @Operation(summary = "추천")
     @PutMapping("/thumbs-up")
     fun thumbsUp(

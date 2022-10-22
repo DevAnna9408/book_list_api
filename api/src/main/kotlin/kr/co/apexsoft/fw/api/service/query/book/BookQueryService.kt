@@ -51,8 +51,8 @@ class BookQueryService(
 
     fun getPostCountAndThumbsUp(userOid: Long): PostCountAndThumbsUpOut {
 
-        val count = bookRepository.getByUserOid(userOid).size
-        val thumbs = bookRepository.getByUserOid(userOid).sumBy { it.thumbsUp() }
+        val count = bookRepository.getListByUserOid(userOid).size
+        val thumbs = bookRepository.getListByUserOid(userOid).sumBy { it.thumbsUp() }
         val bookmark = bookmarkRepository.getByUserOid(userOid).size
 
         return PostCountAndThumbsUpOut(

@@ -18,5 +18,6 @@ interface BookRepositoryCustom {
         sort: Sort,
         pageable: Pageable): Page<Book>
     fun getByOid(bookOid: Long): Book
-    fun getByUserOid(userOid: Long): List<Book>
+    fun getListByUserOid(userOid: Long): List<Book>
+    fun checkByUserOidAndBookOid(userOid: Long, bookOid: Long): Long
 }

@@ -130,13 +130,23 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
             .fetchOne()
     }
 
-    override fun getByUserOid(userOid: Long): List<Book> {
+    override fun getListByUserOid(userOid: Long): List<Book> {
         return from(qBook)
             .where(
                 qBook.deleted.isFalse,
                 qBook.postUser.oid.eq(userOid)
             )
             .fetch() ?: emptyList()
+    }
+
+    override fun checkByUserOidAndBookOid(userOid: Long, bookOid: Long): Long {
+        return from(qBook)
+            .where(
+                qBook.deleted.isFalse,
+                qBook.postUser.oid.eq(userOid),
+                qBook.oid.eq(bookOid)
+            )
+            .fetchCount()
     }
 
 

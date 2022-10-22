@@ -79,4 +79,25 @@ class BookCommandService (
             }
         }
     }
+
+    fun deleteBook(userOid: Long, bookOid: Long) {
+
+        if (bookRepository.checkByUserOidAndBookOid(userOid, bookOid) < 1) throw RuntimeException(MessageUtil.getMessage("NOT_MINE"))
+
+        val dbBook = bookRepository.getByOid(bookOid)
+        val dbBookmarks = bookmarkRepository.getAllByOid(bookOid)
+        val dbBookThumbs = bookThumbRepository.getAllByBookOid(bookOid)
+
+        try {
+            bookThumbRepository.deleteAll(dbBookThumbs)
+            bookmarkRepository.deleteAll(dbBookmarks)
+            bookRepository.delete(dbBook)
+        } catch (
+            e: RuntimeException
+        ) {
+            e.stackTrace.toString()
+            throw RuntimeException(MessageUtil.getMessage("ERROR"))
+        }
+
+    }
 }

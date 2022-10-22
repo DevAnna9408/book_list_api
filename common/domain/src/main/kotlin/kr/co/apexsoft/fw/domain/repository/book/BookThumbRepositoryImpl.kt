@@ -27,4 +27,10 @@ class BookThumbRepositoryImpl: QuerydslRepositorySupport(BookThumb::class.java),
             .fetchCount()
     }
 
+    override fun getAllByBookOid(bookOid: Long): List<BookThumb> {
+        return from(qBookThumb)
+            .where(qBookThumb.thumbBook.oid.eq(bookOid))
+            .fetch()
+    }
+
 }

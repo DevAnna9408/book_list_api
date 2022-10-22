@@ -22,6 +22,9 @@ class User(
     @Column(name = "USER_ID")
     val userId: String, //수정불가
 
+    @Column(name = "nickName")
+    private val nickName: String,
+
     @Column(name = "PASSWORD")
     private var password: String,
 
@@ -86,6 +89,7 @@ class User(
         val locked: Boolean = false
     )
 
+    fun nickName() = nickName
     fun password() = password
     fun status() = status
     fun failCnt() = failCnt

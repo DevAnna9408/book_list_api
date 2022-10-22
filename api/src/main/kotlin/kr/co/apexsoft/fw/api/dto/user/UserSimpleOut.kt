@@ -4,11 +4,13 @@ import kr.co.apexsoft.fw.domain.model.user.User
 
 data class UserSimpleOut(
     val userId: String,
+    val nickName: String
 ) {
     companion object {
         fun fromEntity(e: User): UserSimpleOut {
             return UserSimpleOut(
                 userId = e.userId,
+                nickName = e.nickName()
             )
         }
     }

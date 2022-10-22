@@ -11,6 +11,7 @@ data class SignUpIn(
     fun toEntity(passwordEncoder: PasswordEncoder): User {
         return User(
             userId = userId,
+            nickName = userId.split("@")[0],
             roles = listOf(Role.ROLE_USER),
             password = passwordEncoder.encode(password),
         )

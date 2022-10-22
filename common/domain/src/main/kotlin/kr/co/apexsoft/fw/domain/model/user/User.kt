@@ -23,7 +23,7 @@ class User(
     val userId: String, //수정불가
 
     @Column(name = "nickName")
-    private val nickName: String,
+    private var nickName: String,
 
     @Column(name = "PASSWORD")
     private var password: String,
@@ -110,5 +110,9 @@ class User(
         if (this.failCnt > failMaxCnt) {
             this.locked = true
         }
+    }
+
+    fun updateUserNickName(nickName: String?) {
+        if (!nickName.isNullOrBlank()) this.nickName = nickName
     }
 }

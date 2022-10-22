@@ -145,6 +145,23 @@ class UserCommandService(
     fun isUseUserId(userId: String): Boolean {
         return userRepository.findByUserId(userId).isPresent
     }
+
+    fun updateNickName(userOid: Long, nickName: String?): UserSimpleOut? {
+        val dbUser = userRepository.getByOid(userOid)
+        if (nickName!!.length > 20) throw RuntimeException("프로필명은 20자 이하로 작성해 주세요 :)")
+
+        try {
+            dbUser.updateUserNickName(nickName)
+        } catch (
+            e: RuntimeException
+        ) {
+            e.stackTrace.toString()
+            throw RuntimeException(MessageUtil.getMessage("ERROR"))
+        }
+
+        return UserSimpleOut.fromEntity(userRepository.getByOid(userOid))
+
+    }
 //    @Transactional(readOnly = true)
 //    fun isUse(type: String, value: String?): Boolean? {
 //        if (type == "userId")

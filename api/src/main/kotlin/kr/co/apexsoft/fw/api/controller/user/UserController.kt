@@ -33,6 +33,16 @@ class UserController(
         return ResponseEntity.noContent().build()
     }
 
+    @Operation(summary = "사용자 닉네임 수정")
+    @PatchMapping("/nick-name/{userOid}")
+    fun updateUserId(
+        @PathVariable("userOid") userOid: Long,
+        @RequestParam("nickName") nickName: String?
+    ): ResponseEntity<UserSimpleOut> {
+        SecurityUtil.checkUserOid(userOid)
+        return ResponseEntity.ok(userCommandService.updateNickName(userOid, nickName))
+    }
+
 //    @Operation(summary = "회원 정보 수정")
 //    @PutMapping("/{oid}")
 //    fun save(

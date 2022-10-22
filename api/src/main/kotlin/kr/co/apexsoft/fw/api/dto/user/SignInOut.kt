@@ -11,7 +11,8 @@ data class SignInOut(
 ) {
     data class CustomInfo(
         val userId: String?,
-        val userOid: Long?
+        val userOid: Long?,
+        val nickName: String?
     )
 
     companion object {
@@ -22,7 +23,8 @@ data class SignInOut(
                 roles = signInUser.roles().map { EnumValue(it) },
                 customInfo = CustomInfo(
                     userId = signInUser.userId(),
-                    userOid = signInUser.userOid()
+                    userOid = signInUser.userOid(),
+                    nickName = signInUser.nickName()
                 )
             )
         }

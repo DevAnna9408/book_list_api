@@ -36,6 +36,7 @@ class SignInUser(
         return user.checkActiveUser()
     }
 
+    fun nickName() = user.nickName()
     fun userId() = user.userId
     fun userOid() = user.oid
     fun roles() = user.role()

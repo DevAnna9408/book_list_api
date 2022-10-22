@@ -25,7 +25,7 @@ class BookCommandService (
         ) {
 
     fun createBook(bookIn: BookIn) {
-
+        SecurityUtil.checkUserOid(bookIn.userOid)
         if (bookIn.content.isBlank()) throw RuntimeException(MessageUtil.getMessage("CONTENT_IS_NULL_OR_BLANK"))
         if (bookIn.author.isBlank()) throw RuntimeException(MessageUtil.getMessage("AUTHOR_IS_NULL_OR_BLANK"))
         if (bookIn.title.isBlank()) throw RuntimeException(MessageUtil.getMessage("TITLE_IS_NULL_OR_BLANK"))

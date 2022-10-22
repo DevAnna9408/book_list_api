@@ -21,10 +21,12 @@ class BookQueryService(
 ) {
 
     fun getAllBookList(
+        userOid: Long,
         sortParam: Boolean,
         reverse: Boolean,
         sort: Sort,
         pageable: Pageable): Page<BookOut> {
+        SecurityUtil.checkUserOid(userOid)
         return bookRepository.getAllBookList(
             sortParam,
             reverse,

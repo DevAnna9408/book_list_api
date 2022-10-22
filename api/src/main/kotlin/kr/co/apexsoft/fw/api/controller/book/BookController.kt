@@ -74,6 +74,7 @@ class BookController (
     @Operation(summary = "모든 책 목록 조회")
     @GetMapping("/list")
     fun getAllBookList(
+        @RequestParam("userOid") userOid: Long,
         @RequestParam("sortParam") sortParam: Boolean,
         @RequestParam("reverse") reverse: Boolean,
         @ParameterObject pageable: Pageable
@@ -83,6 +84,7 @@ class BookController (
             else -> Sort.by(Sort.Order.asc("thumbsDown"))
         }
         return ResponseEntity.ok(bookQueryService.getAllBookList(
+            userOid,
             sortParam,
             reverse,
             sort,

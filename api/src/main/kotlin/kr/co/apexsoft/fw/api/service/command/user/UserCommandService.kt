@@ -3,6 +3,7 @@ package kr.co.apexsoft.fw.api.service.command.user
 import kr.co.apexsoft.fw.api.dto.user.*
 import kr.co.apexsoft.fw.domain.model.user.User
 import kr.co.apexsoft.fw.domain.repository.user.UserRepository
+import kr.co.apexsoft.fw.lib.security.SecurityUtil
 import kr.co.apexsoft.fw.lib.security.jwt.JwtGenerator
 import kr.co.apexsoft.fw.lib.utils.MessageUtil
 import org.springframework.dao.DataIntegrityViolationException
@@ -44,6 +45,7 @@ class UserCommandService(
     }
 
     fun deleteUser(userOid: Long) {
+        SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         try {
             dbUser.deleteUser()
@@ -147,6 +149,7 @@ class UserCommandService(
     }
 
     fun updateNickName(userOid: Long, nickName: String?): UserSimpleOut? {
+        SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         if (nickName!!.length > 20) throw RuntimeException("프로필명은 20자 이하로 작성해 주세요 :)")
 

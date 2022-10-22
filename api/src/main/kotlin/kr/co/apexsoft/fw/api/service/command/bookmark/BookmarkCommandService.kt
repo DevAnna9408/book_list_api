@@ -4,6 +4,7 @@ import kr.co.apexsoft.fw.api.dto.bookmark.BookmarkIn
 import kr.co.apexsoft.fw.domain.repository.book.BookRepository
 import kr.co.apexsoft.fw.domain.repository.bookmark.BookmarkRepository
 import kr.co.apexsoft.fw.domain.repository.user.UserRepository
+import kr.co.apexsoft.fw.lib.security.SecurityUtil
 import kr.co.apexsoft.fw.lib.utils.MessageUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,6 +20,7 @@ class BookmarkCommandService (
         ) {
 
     fun createBookmark(userOid: Long, bookOid: Long) {
+        SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
 
@@ -35,6 +37,7 @@ class BookmarkCommandService (
     }
 
     fun deleteBookmark(userOid: Long, bookOid: Long) {
+        SecurityUtil.checkUserOid(userOid)
         val dbBookmark = bookmarkRepository.getByUserOidAndBookOid(userOid, bookOid)
 
         try {

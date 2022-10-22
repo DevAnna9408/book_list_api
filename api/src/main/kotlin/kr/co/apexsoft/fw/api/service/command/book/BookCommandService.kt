@@ -42,6 +42,7 @@ class BookCommandService (
     }
 
     fun thumbsUp(userOid: Long, bookOid: Long) {
+        SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
 
@@ -63,6 +64,7 @@ class BookCommandService (
     }
 
     fun thumbsDown(userOid: Long, bookOid: Long) {
+        SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
         if (bookThumbRepository.getByUserOidAndDown(userOid, bookOid) > 0) {
@@ -83,7 +85,7 @@ class BookCommandService (
     }
 
     fun deleteBook(userOid: Long, bookOid: Long) {
-
+        SecurityUtil.checkUserOid(userOid)
         if (bookRepository.checkByUserOidAndBookOid(userOid, bookOid) < 1) throw RuntimeException(MessageUtil.getMessage("NOT_MINE"))
 
         val dbBook = bookRepository.getByOid(bookOid)

@@ -4,6 +4,7 @@ import kr.co.apexsoft.fw.api.dto.book.BookOut
 import kr.co.apexsoft.fw.api.dto.book.PostCountAndThumbsUpOut
 import kr.co.apexsoft.fw.domain.repository.book.BookRepository
 import kr.co.apexsoft.fw.domain.repository.bookmark.BookmarkRepository
+import kr.co.apexsoft.fw.lib.security.SecurityUtil
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -38,6 +39,7 @@ class BookQueryService(
         reverse: Boolean,
         sort: Sort,
         pageable: Pageable): Page<BookOut> {
+        SecurityUtil.checkUserOid(userOid)
         return bookRepository.getAllMyBookList(
             userOid,
             sortParam,
@@ -50,7 +52,7 @@ class BookQueryService(
 
 
     fun getPostCountAndThumbsUp(userOid: Long): PostCountAndThumbsUpOut {
-
+        SecurityUtil.checkUserOid(userOid)
         val count = bookRepository.getListByUserOid(userOid).size
         val thumbs = bookRepository.getListByUserOid(userOid).sumBy { it.thumbsUp() }
         val bookmark = bookmarkRepository.getByUserOid(userOid).size

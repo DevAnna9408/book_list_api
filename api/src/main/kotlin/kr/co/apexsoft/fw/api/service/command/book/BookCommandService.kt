@@ -107,7 +107,10 @@ class BookCommandService (
 
     fun getRandomBook(userOid: Long): BookOut {
         SecurityUtil.checkUserOid(userOid)
-        val dbBooks = bookRepository.findAll().filter { !it.deleted() }.map { it.oid }
+        val dbBooks = bookRepository.findAll()
+            .filter { !it.deleted() }
+            .filter { it.thumbsUp() >= 10 }
+            .map { it.oid }
         val dbBook = bookRepository.getByOid(dbBooks.random()!!)
         return BookOut.fromEntity(dbBook)
     }

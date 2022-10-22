@@ -51,6 +51,7 @@ class Book (
 
     fun _thumbsDown() {
         this.thumbsDown += 1
+        if (this.thumbsDown == 10) this.deleted = true
     }
 
     fun deleteBook() {

@@ -1,12 +1,14 @@
 package kr.co.apexsoft.fw.api.service.command.book
 
 import kr.co.apexsoft.fw.api.dto.book.BookIn
+import kr.co.apexsoft.fw.api.dto.book.BookOut
 import kr.co.apexsoft.fw.api.dto.book.BookThumbIn
 import kr.co.apexsoft.fw.api.dto.bookmark.BookmarkIn
 import kr.co.apexsoft.fw.domain.repository.book.BookRepository
 import kr.co.apexsoft.fw.domain.repository.book.BookThumbRepository
 import kr.co.apexsoft.fw.domain.repository.bookmark.BookmarkRepository
 import kr.co.apexsoft.fw.domain.repository.user.UserRepository
+import kr.co.apexsoft.fw.lib.security.SecurityUtil
 import kr.co.apexsoft.fw.lib.utils.MessageUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -99,5 +101,12 @@ class BookCommandService (
             throw RuntimeException(MessageUtil.getMessage("ERROR"))
         }
 
+    }
+
+    fun getRandomBook(userOid: Long): BookOut {
+        SecurityUtil.checkUserOid(userOid)
+        val dbBooks = bookRepository.findAll().filter { !it.deleted() }.map { it.oid }
+        val dbBook = bookRepository.getByOid(dbBooks.random()!!)
+        return BookOut.fromEntity(dbBook)
     }
 }

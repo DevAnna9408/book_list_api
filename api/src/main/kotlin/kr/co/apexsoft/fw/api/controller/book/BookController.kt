@@ -43,6 +43,14 @@ class BookController (
         return ResponseEntity.noContent().build()
     }
 
+    @Operation(summary = "랜덤으로 책 불러오기")
+    @GetMapping("/random")
+    fun getRandomBook(
+        @RequestParam("userOid") userOid: Long
+    ): ResponseEntity<BookOut> {
+        return ResponseEntity.ok(bookCommandService.getRandomBook(userOid))
+    }
+
     @Operation(summary = "추천")
     @PutMapping("/thumbs-up")
     fun thumbsUp(

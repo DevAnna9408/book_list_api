@@ -8,7 +8,7 @@ class HomeController(
     ) {
     @GetMapping("/")
     fun index(): ResponseEntity<String> {
-        return ResponseEntity.ok("Hello apexsoft Service")
+        return ResponseEntity.ok("Hello")
     }
 }
 

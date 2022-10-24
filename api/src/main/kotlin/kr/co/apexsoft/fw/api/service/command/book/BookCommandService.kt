@@ -111,6 +111,8 @@ class BookCommandService (
             .filter { !it.deleted() }
             .filter { it.thumbsUp() >= 10 }
             .map { it.oid }
+
+        if (dbBooks.isEmpty()) throw RuntimeException("아직 추천이 10개가 넘은 글이 없어요 :(")
         val dbBook = bookRepository.getByOid(dbBooks.random()!!)
         return BookOut.fromEntity(dbBook)
     }

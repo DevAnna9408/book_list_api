@@ -8,7 +8,7 @@ plugins {
 
 }
 
-group = "kr.co.apexsoft.fw.common"
+group = "kr.co.book.list.common"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 

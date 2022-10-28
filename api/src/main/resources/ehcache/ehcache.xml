@@ -5,7 +5,7 @@
     <cache-template name="default">
         <listeners>
             <listener>
-                <class>kr.co.apexsoft.fw.api.config.CacheLogger</class>
+                <class>kr.co.book.list.api.config.CacheLogger</class>
                 <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
                 <event-ordering-mode>UNORDERED</event-ordering-mode>
                 <events-to-fire-on>CREATED</events-to-fire-on>

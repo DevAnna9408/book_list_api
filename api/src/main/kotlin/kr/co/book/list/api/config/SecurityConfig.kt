@@ -103,7 +103,7 @@ class SecurityConfig(
     fun corsConfigurationSource(): CorsConfigurationSource? {
         val configuration = CorsConfiguration()
         configuration.addAllowedOriginPattern("http://localhost:3000")
-        configuration.addAllowedOriginPattern("http://thousandbook.xyz")
+        configuration.addAllowedOriginPattern("http://thousandbook.xyz.s3-website.ap-northeast-2.amazonaws.com")
         configuration.addAllowedMethod("*")
         configuration.addAllowedHeader("*")
         configuration.allowCredentials = true

@@ -45,11 +45,6 @@ dependencies {
     annotationProcessor ("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    //birt
-    implementation("org.eclipse.birt.runtime:org.eclipse.birt.runtime:4.4.2") {
-        exclude("org.eclipse.birt.runtime.3_7_1', module: 'org.apache.batik.pdf")
-//        exclude("org.eclipse.birt.runtime.4.3.1', module: 'org.apache.poi")
-    }
     implementation("org.apache.pdfbox:pdfbox:2.0.7")
 
     implementation("commons-io:commons-io:2.11.0")

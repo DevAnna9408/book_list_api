@@ -16,10 +16,6 @@ aws:
     bucketName:
     URL:
 
-birt:
-  rpt.format: pdf
-
-
 --- # develop
 spring:
   config:

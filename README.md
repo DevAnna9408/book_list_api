@@ -168,9 +168,6 @@ data class UserOut(
 - mail : ses메일
 - s3 : 파일
 
-### birt
-- pdf
-
 ### config
 - 다국어 설정
 

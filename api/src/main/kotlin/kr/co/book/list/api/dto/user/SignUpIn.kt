@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 data class SignUpIn(
     val userId: String,
     val password: String,
+    val question: String,
+    val answer: String
 ) {
     fun toEntity(passwordEncoder: PasswordEncoder): User {
         return User(
@@ -14,6 +16,8 @@ data class SignUpIn(
             nickName = userId.split("@")[0],
             roles = listOf(Role.ROLE_USER),
             password = passwordEncoder.encode(password),
+            question = question,
+            answer = answer
         )
     }
 }

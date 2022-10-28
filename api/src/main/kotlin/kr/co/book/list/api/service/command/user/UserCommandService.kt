@@ -25,8 +25,6 @@ class UserCommandService(
     private val frontUrl: String,
 
 //    private val mailService: MailService,
-
-    private val jwtGenerator: JwtGenerator,
 ) {
     fun createUser(signUpIn: SignUpIn): UserSimpleOut {
         val user: User = try {
@@ -76,46 +74,18 @@ class UserCommandService(
     }
 
 
-    fun saveUser(oid: Long, userUpdateIn: UserUpdateIn): UserSimpleOut {
-        val dbUser = userRepository.getByOid(oid)
-        dbUser.updateWith(
-            User.NewValue(
-                password = passwordEncoder.encode(userUpdateIn.password),
-            )
-        )
-        return UserSimpleOut.fromEntity(dbUser)
-    }
-
-    fun changePassword(oid: Long, passwordIn: PasswordIn) {
-        val dbUser = userRepository.getByOid(oid)
-        dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
-    }
-
-    fun changePasswordAfterFind(userId: String, passwordIn: PasswordIn) {
-        val dbUser = userRepository.getByUserId(userId)
-        dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
-    }
-
-    fun resetPassword(oid: Long): String {
-        val dbUser = userRepository.getByOid(oid)
-        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        val initPassword = (1..7)
-            .map { charPool.random() }
-            .joinToString("")
-        dbUser.changePassword(passwordEncoder.encode(initPassword))
-        return initPassword
-    }
+//    fun changePasswordAfterFind(userId: String, passwordIn: PasswordIn) {
+//        val dbUser = userRepository.getByUserId(userId)
+//        dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
+//    }
 
     /**
      * 비밀번호 찾기
-     *
-     * @param userId
-     * @param email
      */
-    fun findPassword(userId: String) {
-        val user = userRepository.getByUserId(userId)
-       /* sendEmail(user.userId, user.email())*/
-    }
+//    fun findPassword(userId: String) {
+//        val user = userRepository.getByUserId(userId)
+//       /* sendEmail(user.userId, user.email())*/
+//    }
 
 
     /**
@@ -128,50 +98,17 @@ class UserCommandService(
         mailService.send(dto)
     }*/
 
-    private fun getModifyPwdUrl(userId: String, email: String): String {
-        val expireDate = LocalDateTime.now().plusMinutes(30).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
-        return frontUrl + "/user/modify/pwd/after/find/" + userId + "/" + expireDate + "/" + getHash(userId, email)
-    }
+//    private fun getModifyPwdUrl(userId: String, email: String): String {
+//        val expireDate = LocalDateTime.now().plusMinutes(30).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+//        return frontUrl + "/user/modify/pwd/after/find/" + userId + "/" + expireDate + "/" + getHash(userId, email)
+//    }
 
     /**
      * 이메일 hash
-     *
-     * @param userId
-     * @param email
-     * @return
      */
-    private fun getHash(userId: String, email: String): String {
-        //return HashUtil.generateHash("$userId:$email")
-        return "TODO: "
-    }
-
-    /**
-     * 캡차 성공 후처리
-     *
-     * @param userId
-     * @return
-     */
-    fun unlockUser(userId: String): UserOut {
-        val dbUser = userRepository.getByUserId(userId)
-        dbUser.unlock()
-        return UserOut.fromEntity(dbUser)
-    }
-
-
-//    fun isUseUserEmail(email: String): Boolean {
-//        return userRepository.findByEmail(email).isPresent
+//    private fun getHash(userId: String, email: String): String {
+//        //return HashUtil.generateHash("$userId:$email")
+//        return "TODO: "
 //    }
 
-    fun isUseUserId(userId: String): Boolean {
-        return userRepository.findByUserId(userId).isPresent
-    }
-
-//    @Transactional(readOnly = true)
-//    fun isUse(type: String, value: String?): Boolean? {
-//        if (type == "userId")
-//            return !isUseUserId(value!!)
-//        else if (type == "email")
-//            return !isUseUserEmail(value!!)
-//        return true
-//    }
 }

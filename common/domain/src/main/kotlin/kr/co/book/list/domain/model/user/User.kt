@@ -32,6 +32,12 @@ class User(
     @Convert(converter = RoleEnumToListConvert::class)
     private var roles: List<Role>,
 
+    @Column(name = "QUESTION")
+    private val question: String,
+
+    @Column(name = "ANSWER")
+    private val answer: String,
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private var status: Status = Status.ACTIVE, // 사용자 상태 코드

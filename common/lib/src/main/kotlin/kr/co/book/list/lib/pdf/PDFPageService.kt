@@ -105,7 +105,7 @@ class PDFPageService (resourceLoader: ResourceLoader){
             val ap = AccessPermission()
             ap.setCanModify(false)
             ap.setReadOnly()
-            val spp = StandardProtectionPolicy("apexSecret", "", ap)
+            val spp = StandardProtectionPolicy("bookListSecret", "", ap)
 
             //TODO : NanumGothicCoding: 영문.숫자.한글 지원 폰트로 다른언어지원시 변경 필요
             val fontstream =

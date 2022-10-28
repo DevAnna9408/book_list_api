@@ -24,7 +24,7 @@ class JwtGenerator(
 
     fun generateUserToken(signInUser: SignInUser): String {
         return Jwts.builder()
-            .setSubject("apexsoft-user")
+            .setSubject("book-list-user")
             .claim(JwtKeys.UID.keyName, signInUser.username)
             .claim(JwtKeys.USER_OID.keyName, signInUser.userOid())
             .signWith(key, SignatureAlgorithm.HS512)

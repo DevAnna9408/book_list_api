@@ -23,7 +23,7 @@ class MailDto {
         resourceLoader: ResourceLoader
     ) {
         this.to = checkMailAddr(to)
-        this.subject = "[Apexsoft] $subject"
+        this.subject = "[title] $subject"
         this.templateId = templateId!!
         this.replacements = replacements
         content = MailTemplateUtil.getMailContent(templateId, replacements, resourceLoader)

@@ -20,7 +20,7 @@ front.url: http://localhost:3000
 logging:
   level:
     ROOT: warn
-    kr.co.apexsoft: debug
+    kr.co.book.list: debug
     p6spy: info
 
 

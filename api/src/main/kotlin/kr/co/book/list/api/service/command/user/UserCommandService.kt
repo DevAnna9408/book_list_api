@@ -73,15 +73,24 @@ class UserCommandService(
         }
     }
 
-
-//    fun changePasswordAfterFind(userId: String, passwordIn: PasswordIn) {
-//        val dbUser = userRepository.getByUserId(userId)
-//        dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
-//    }
-
     /**
      * 비밀번호 찾기
      */
+    fun findQuestion(userId: String, nickName: String): String {
+        return userRepository.getByUserIdAndNickName(userId, nickName).question()
+    }
+
+    fun answerPassword(userId: String, nickName: String, answer: String): Boolean {
+        val dbUser = userRepository.getByUserIdAndNickName(userId, nickName)
+        return dbUser.answer() == answer.replace(" ", "")
+    }
+
+    fun changePasswordAfterFind(userId: String, passwordIn: PasswordIn) {
+        val dbUser = userRepository.getByUserId(userId)
+        dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
+    }
+
+
 //    fun findPassword(userId: String) {
 //        val user = userRepository.getByUserId(userId)
 //       /* sendEmail(user.userId, user.email())*/

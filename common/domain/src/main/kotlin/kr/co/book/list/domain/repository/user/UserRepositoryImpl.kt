@@ -56,6 +56,15 @@ class UserRepositoryImpl : QuerydslRepositorySupport(User::class.java), UserRepo
             .fetchOne())
     }
 
+    override fun getByUserIdAndNickName(userId: String, nickName: String): User {
+        return from(qUser)
+            .where(
+                qUser.userId.eq(userId),
+                qUser.nickName.eq(nickName)
+            )
+            .fetchOne() ?: throw DomainEntityNotFoundException(userId, User::class, DomainMessageUtil.getMessage("USER_NOT_FOUND"))
+    }
+
     private fun isActive(): BooleanExpression? {
         return  qUser.status.eq(User.Status.ACTIVE)
     }

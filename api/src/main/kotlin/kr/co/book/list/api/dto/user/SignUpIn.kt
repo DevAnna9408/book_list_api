@@ -17,7 +17,7 @@ data class SignUpIn(
             roles = listOf(Role.ROLE_USER),
             password = passwordEncoder.encode(password),
             question = question,
-            answer = answer
+            answer = answer.replace(" ", "")
         )
     }
 }

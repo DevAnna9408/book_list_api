@@ -95,6 +95,8 @@ class User(
         val locked: Boolean = false
     )
 
+    fun answer() = answer
+    fun question()  =question
     fun nickName() = nickName
     fun password() = password
     fun status() = status

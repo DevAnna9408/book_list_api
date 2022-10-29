@@ -14,5 +14,6 @@ interface UserRepositoryCustom {
         pageable: Pageable
     ): Page<User>
     fun findByUserId(userId: String): Optional<User>
+    fun getByUserIdAndNickName(userId: String, nickName: String): User
 
 }

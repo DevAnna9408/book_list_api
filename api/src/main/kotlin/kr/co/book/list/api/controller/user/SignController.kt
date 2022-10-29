@@ -44,11 +44,35 @@ class SignController(
         // return ResponseEntity.ok(Role.values().map { EnumValue(it) })
     }
 
-//    @Operation(summary = "비밀번호 찾기")
-//    @GetMapping("/find/password")
-//    fun findPassword(@RequestParam userId: String) {
-//        userCommandService.findPassword(userId)
-//    }
+    @Operation(summary = "비밀번호 질문 찾기")
+    @GetMapping("/find-password")
+    fun findQuestion(
+        @RequestParam("userId") userId: String,
+        @RequestParam("nickName") nickName: String
+    ): ResponseEntity<String> {
+        return ResponseEntity.ok(userCommandService.findQuestion(userId, nickName))
+    }
+
+    @Operation(summary = "비밀번호 질문에 대한 답변")
+    @PostMapping("/answer-password")
+    fun answerPassword(
+        @RequestParam("userId") userId: String,
+        @RequestParam("nickName") nickName: String,
+        @RequestParam("answer") answer: String
+    ): ResponseEntity<Boolean> {
+        return ResponseEntity.ok(userCommandService.answerPassword(userId, nickName, answer))
+    }
+
+    @Operation(summary = "비밀번호 재설정")
+    @PutMapping("/change-password/{userId}")
+    fun changePassword(
+        @PathVariable("userId") userId: String,
+        @RequestBody passwordIn: PasswordIn
+    ) : ResponseEntity<Nothing> {
+        userCommandService.changePasswordAfterFind(userId, passwordIn)
+        return ResponseEntity.noContent().build()
+    }
+
 //
 //    @Operation(summary = "비밀번호 찾기 이후 비밀번호 재설정")
 //    @PatchMapping("/{userId}/change-password-after-find")

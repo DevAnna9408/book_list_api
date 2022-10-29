@@ -60,7 +60,9 @@ class SecurityConfig(
             .antMatchers(*swaggerAllowedList()).permitAll()
             .antMatchers(*actuatorAllowedList()).permitAll()
             .antMatchers(*devAllowedList()).permitAll()
+            .antMatchers(HttpMethod.GET, *signAllowedList()).permitAll()
             .antMatchers(HttpMethod.POST, *signAllowedList()).permitAll()
+            .antMatchers(HttpMethod.PUT, *signAllowedList()).permitAll()
             .antMatchers(HttpMethod.GET, *findAllowedList()).permitAll()
             .antMatchers(HttpMethod.PATCH, *changeAllowedList()).permitAll()
             .antMatchers(HttpMethod.GET, *captchaAllowedList()).permitAll()
@@ -133,6 +135,9 @@ class SecurityConfig(
         return arrayOf(
             "/api/sign-up",
             "/api/sign-in",
+            "/api/find-password",
+            "/api/answer-password",
+            "/api/change-password/**",
         )
     }
 

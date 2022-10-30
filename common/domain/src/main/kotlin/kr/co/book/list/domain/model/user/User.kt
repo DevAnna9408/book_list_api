@@ -83,7 +83,7 @@ class User(
     }
 
     fun deleteUser() {
-        this.status = Status.INACTIVE
+        this.status = Status.WITHDRAW
     }
 
 

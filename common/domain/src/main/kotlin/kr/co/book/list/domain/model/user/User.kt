@@ -95,6 +95,12 @@ class User(
         val locked: Boolean = false
     )
 
+    fun reset() {
+        this.status = Status.ACTIVE
+        this.failCnt = 0
+        this.locked = false
+    }
+
     fun answer() = answer
     fun question()  =question
     fun nickName() = nickName

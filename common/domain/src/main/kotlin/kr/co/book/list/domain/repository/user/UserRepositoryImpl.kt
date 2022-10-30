@@ -59,6 +59,7 @@ class UserRepositoryImpl : QuerydslRepositorySupport(User::class.java), UserRepo
     override fun getByUserIdAndNickName(userId: String, nickName: String): User {
         return from(qUser)
             .where(
+                isActive(),
                 qUser.userId.eq(userId),
                 qUser.nickName.eq(nickName)
             )

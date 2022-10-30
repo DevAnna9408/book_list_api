@@ -88,6 +88,7 @@ class UserCommandService(
     fun changePasswordAfterFind(userId: String, passwordIn: PasswordIn) {
         val dbUser = userRepository.getByUserId(userId)
         dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
+        dbUser.reset()
     }
 
 

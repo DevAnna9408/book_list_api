@@ -20,4 +20,5 @@ interface BookRepositoryCustom {
     fun getByOid(bookOid: Long): Book
     fun getListByUserOid(userOid: Long): List<Book>
     fun checkByUserOidAndBookOid(userOid: Long, bookOid: Long): Long
+    fun checkAlreadyPost(userOid: Long): Long
 }

@@ -24,6 +24,15 @@ class BookController (
 
         ) {
 
+    @Operation(summary = "책 10개이상 작성 체크")
+    @GetMapping("/check")
+    fun checkAlreadyPost(
+        @RequestParam("userOid") userOid: Long
+    ) : ResponseEntity<Nothing> {
+        bookQueryService.checkAlreadyPost(userOid)
+        return ResponseEntity.noContent().build()
+    }
+
     @Operation(summary = "책 작성")
     @PostMapping
     fun createBook(

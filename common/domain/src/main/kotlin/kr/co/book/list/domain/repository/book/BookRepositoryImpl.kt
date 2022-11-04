@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.data.support.PageableExecutionUtils
+import java.time.LocalDate
 
 class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepositoryCustom {
 
@@ -145,6 +146,16 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
                 qBook.deleted.isFalse,
                 qBook.postUser.oid.eq(userOid),
                 qBook.oid.eq(bookOid)
+            )
+            .fetchCount()
+    }
+
+    override fun checkAlreadyPost(userOid: Long): Long {
+        return from(qBook)
+            .where(
+                qBook.postUser.oid.eq(userOid),
+                qBook.deleted.isFalse,
+                qBook.createdTime.eq(LocalDate.now())
             )
             .fetchCount()
     }

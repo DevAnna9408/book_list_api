@@ -5,6 +5,7 @@ import kr.co.book.list.api.dto.book.PostCountAndThumbsUpOut
 import kr.co.book.list.domain.repository.book.BookRepository
 import kr.co.book.list.domain.repository.bookmark.BookmarkRepository
 import kr.co.book.list.lib.security.SecurityUtil
+import kr.co.book.list.lib.utils.MessageUtil
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -19,6 +20,10 @@ class BookQueryService(
     private val bookmarkRepository: BookmarkRepository
 
 ) {
+
+    fun checkAlreadyPost(userOid: Long) {
+        if (bookRepository.checkAlreadyPost(userOid) >= 10) throw RuntimeException(MessageUtil.getMessage("ALREADY_POST"))
+    }
 
     fun getAllBookList(
         userOid: Long,

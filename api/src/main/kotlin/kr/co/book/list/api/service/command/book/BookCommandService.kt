@@ -32,6 +32,8 @@ class BookCommandService (
 
         val dbUser = userRepository.getByOid(bookIn.userOid)
 
+        if (bookRepository.checkAlreadyPost(bookIn.userOid) >= 10) throw RuntimeException(MessageUtil.getMessage("ALREADY_POST"))
+
         val book = try {
             bookRepository.save(bookIn.toEntity(dbUser))
         } catch (e: RuntimeException) {

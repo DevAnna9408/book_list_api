@@ -1,3 +1,5 @@
+server:
+  port: 8096
 file:
   rootDir: /opt/
   ## BIRT로 생성되어 업로드 할 PDF 저장 기준 위치

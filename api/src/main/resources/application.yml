@@ -1,3 +1,5 @@
+server:
+  port: 8096
 spring:
   profiles:
     include:
@@ -15,7 +17,7 @@ jwt:
 
 login.failMaxCnt: 5 # 로그인 실패 횟수
 
-front.url: http://localhost:3000
+front.url: http://localhost:3040
 
 logging:
   level:

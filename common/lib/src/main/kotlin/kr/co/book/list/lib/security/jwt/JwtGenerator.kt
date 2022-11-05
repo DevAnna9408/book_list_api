@@ -28,7 +28,7 @@ class JwtGenerator(
             .claim(JwtKeys.UID.keyName, signInUser.username)
             .claim(JwtKeys.USER_OID.keyName, signInUser.userOid())
             .signWith(key, SignatureAlgorithm.HS512)
-//            .setExpiration(expiration(jwtProperties.swaggerTokenDurationHr))
+            .setExpiration(expiration(jwtProperties.swaggerTokenDurationHr))
             .compact()
     }
 

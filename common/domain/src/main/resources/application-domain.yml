@@ -1,4 +1,10 @@
 server:
+  ssl:
+    enabled: true
+    key-store: keystore.p12
+    key-store-password: annaHome
+    key-store-type: PKCS12
+    key-alias: bns-ssl
   port: 8096
 spring:
   datasource:

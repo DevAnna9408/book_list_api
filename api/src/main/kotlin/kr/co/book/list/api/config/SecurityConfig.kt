@@ -105,6 +105,7 @@ class SecurityConfig(
     fun corsConfigurationSource(): CorsConfigurationSource? {
         val configuration = CorsConfiguration()
         configuration.addAllowedOriginPattern("http://localhost:3040")
+        configuration.addAllowedOriginPattern("https://localhost:3040")
         // 도메인이 2개
         configuration.addAllowedOriginPattern("https://thousandbook.xyz")
         configuration.addAllowedOriginPattern("https://www.thousandbook.xyz")

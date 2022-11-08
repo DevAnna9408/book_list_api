@@ -35,6 +35,12 @@ class Book (
     @JoinColumn(name = "POST_USER")
     private val postUser: User,
 
+    @OneToMany(mappedBy = "thumbBook", cascade = [CascadeType.ALL], orphanRemoval = true)
+    private val bookThumbs:MutableList<BookThumb> = mutableListOf(),
+
+    @OneToMany(mappedBy = "book", cascade = [CascadeType.ALL], orphanRemoval = true)
+    private val bookMarks: MutableList<Bookmark> = mutableListOf()
+
     ) : AbstractEntity(oid) {
 
     fun content() = content

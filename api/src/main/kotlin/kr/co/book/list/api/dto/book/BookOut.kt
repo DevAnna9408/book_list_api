@@ -9,7 +9,8 @@ data class BookOut(
     val title: String,
     val thumbsUp: Int,
     val thumbsDown: Int,
-    val isMarked: Boolean
+    val isMarked: Boolean,
+    val postUserOid: Long
 ) {
     companion object {
         fun fromEntity(e: Book): BookOut {
@@ -20,7 +21,8 @@ data class BookOut(
                 title = e.title(),
                 thumbsUp = e.thumbsUp(),
                 thumbsDown = e.thumbsDown(),
-                isMarked = false
+                isMarked = false,
+                postUserOid = e.postUser().oid!!
             )
         }
     }

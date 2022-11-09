@@ -79,6 +79,9 @@ class BookCommandService (
                 bookThumbRepository.save(BookThumbIn(false).toEntity(
                     dbUser, dbBook
                 ))
+                if (dbBook.thumbsDown() >= 29) {
+                    dbBook.deleteBook()
+                }
             } catch (
                 e: RuntimeException
             ) {

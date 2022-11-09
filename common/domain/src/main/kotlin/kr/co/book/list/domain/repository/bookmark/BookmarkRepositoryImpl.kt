@@ -21,6 +21,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         val result = from(qBookmark)
             .where(
                 qBookmark.bookmarkUser.oid.eq(userOid),
+                qBookmark.book.deleted.isFalse,
                 eqIsWritten(isWritten, userOid)
             )
             .fetchAll()
@@ -42,6 +43,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
     override fun getBookOidsInBookmark(userOid: Long): List<Bookmark> {
         return from(qBookmark)
             .where(
+                qBookmark.book.deleted.isFalse,
                 qBookmark.bookmarkUser.oid.eq(userOid)
             )
             .fetch()
@@ -60,6 +62,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
     override fun getByUserOid(userOid: Long): List<Bookmark> {
         return from(qBookmark)
             .where(
+                qBookmark.book.deleted.isFalse,
                 qBookmark.bookmarkUser.oid.eq(userOid)
             )
             .fetch() ?: emptyList()

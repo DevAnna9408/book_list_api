@@ -8,7 +8,7 @@ class HomeController(
     ) {
     @GetMapping("/")
     fun index(): ResponseEntity<String> {
-        return ResponseEntity.ok("Hello")
+        return ResponseEntity.ok("따북 API 확인 되었습니다.")
     }
 }
 

@@ -19,7 +19,7 @@ class AdminController(
     ) {
 
     @Operation(summary = "책 삭제")
-    @DeleteMapping
+    @DeleteMapping("/book")
     fun deleteBook(
         @RequestParam("userOid") userOid: Long,
         @RequestParam("bookOid") bookOid: Long

@@ -23,3 +23,20 @@ enum class Role(private val korName: String, private val engName: String) : Enum
     }
 }
 
+enum class LockReason(private val korName: String, private val engName: String) : EnumModel {
+
+    ACCUMULATED_REPORTS("신고누적", "ACCUMULATED REPORTS");
+
+    override fun getKorName(): String {
+        return korName
+    }
+
+    override fun getEngName(): String {
+        return engName
+    }
+
+    override fun getCode(): String {
+        return name
+    }
+}
+

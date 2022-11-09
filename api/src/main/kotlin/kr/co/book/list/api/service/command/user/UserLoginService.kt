@@ -29,6 +29,7 @@ class UserLoginService(
     //비민번호 틀렸을 경우는 Update 가 이뤄나야 하므로 예외처리
     @Transactional(noRollbackFor = [BadCredentialsException::class])
     fun login(signIn: SignInIn): SignInOut {
+        isLockedUser(signIn.userId)
         val authenticate: Authentication = try {
             authManager.authenticate(UsernamePasswordAuthenticationToken(signIn.userId, signIn.password))
         } catch (e: InternalAuthenticationServiceException) { // 존재하지 않는 사용자
@@ -50,5 +51,11 @@ class UserLoginService(
     fun failPassword(userId:String) {
         val dbUser = userRepository.getByUserId(userId)
         dbUser.checkLock(failMaxCnt)
+    }
+
+    fun isLockedUser(userId: String) {
+        val dbUser = userRepository.getByUserId(userId)
+        if (dbUser.lockReason != null) throw LockedException(MessageUtil.getMessage("LOCKED_USER"))
+
     }
 }

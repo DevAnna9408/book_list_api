@@ -1,6 +1,7 @@
 package kr.co.book.list.api.service.command.user
 
 import kr.co.book.list.api.dto.user.*
+import kr.co.book.list.domain.model.LockReason
 import kr.co.book.list.domain.model.user.User
 import kr.co.book.list.domain.repository.user.UserRepository
 import kr.co.book.list.lib.security.SecurityUtil
@@ -89,6 +90,18 @@ class UserCommandService(
         val dbUser = userRepository.getByUserId(userId)
         dbUser.changePassword(passwordEncoder.encode(passwordIn.newPassword))
         dbUser.reset()
+    }
+
+    fun updateUserLockCount(userOid: Long) {
+        val dbUser = userRepository.getByOid(userOid)
+        if (dbUser.updateLockCount() >= 3) {
+            lockUser(dbUser, LockReason.ACCUMULATED_REPORTS)
+        }
+    }
+
+    fun lockUser(user: User, reason: LockReason) {
+        user.lockReason = reason
+        user.lockUser()
     }
 
 

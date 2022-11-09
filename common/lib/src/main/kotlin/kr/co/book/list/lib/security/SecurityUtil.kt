@@ -33,7 +33,7 @@ object SecurityUtil {
     fun checkManagerRole() {
         val authUser = authUser()
         if (authUser.isFreePass()) return
-        if (!authUser.roles.any { it.getCode().equals(Role.ROLE_MANAGER.getCode()) }) {
+        if (!authUser.roles.any { it.getCode() == Role.ROLE_MANAGER.getCode() }) {
             throw AccessDeniedException(MessageUtil.getMessage("ROLE_NOT_FOUND"))
         }
 

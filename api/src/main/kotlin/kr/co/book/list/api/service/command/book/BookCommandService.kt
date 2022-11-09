@@ -4,6 +4,7 @@ import kr.co.book.list.api.dto.book.BookIn
 import kr.co.book.list.api.dto.book.BookOut
 import kr.co.book.list.api.dto.book.BookThumbIn
 import kr.co.book.list.api.dto.bookmark.BookmarkIn
+import kr.co.book.list.api.service.command.user.UserCommandService
 import kr.co.book.list.domain.repository.book.BookRepository
 import kr.co.book.list.domain.repository.book.BookThumbRepository
 import kr.co.book.list.domain.repository.bookmark.BookmarkRepository
@@ -20,7 +21,8 @@ class BookCommandService (
     private val userRepository: UserRepository,
     private val bookRepository: BookRepository,
     private val bookmarkRepository: BookmarkRepository,
-    private val bookThumbRepository: BookThumbRepository
+    private val bookThumbRepository: BookThumbRepository,
+    private val userCommandService: UserCommandService
 
         ) {
 
@@ -98,6 +100,22 @@ class BookCommandService (
 //            bookThumbRepository.deleteAll(dbBookThumbs)
 //            bookmarkRepository.deleteAll(dbBookmarks)
             bookRepository.delete(dbBook)
+        } catch (
+            e: RuntimeException
+        ) {
+            e.stackTrace.toString()
+            throw RuntimeException(MessageUtil.getMessage("ERROR"))
+        }
+
+    }
+
+    fun deleteBookByAdmin(userOid: Long, bookOid: Long) {
+        SecurityUtil.checkManagerRole()
+        val dbBook = bookRepository.getByOid(bookOid)
+
+        try {
+            bookRepository.delete(dbBook)
+            userCommandService.updateUserLockCount(userOid)
         } catch (
             e: RuntimeException
         ) {

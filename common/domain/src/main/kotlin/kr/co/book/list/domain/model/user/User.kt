@@ -3,6 +3,7 @@ package kr.co.book.list.domain.model.user
 import kr.co.book.list.domain._common.AbstractEntity
 import kr.co.book.list.domain._common.EnumModel
 import kr.co.book.list.domain.converter.RoleEnumToListConvert
+import kr.co.book.list.domain.model.LockReason
 import kr.co.book.list.domain.model.Role
 import javax.persistence.*
 
@@ -45,6 +46,13 @@ class User(
     @Column(name = "FAIL_CNT")
     var failCnt: Int = 0,// 로그인 실패횟수
 
+    @Column(name = "LOCK_COUNT")
+    private var lockCount: Int = 0,// 사용자 신고 or 관리자 규제에 의한 잠금카운트
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "LOCK_REASON")
+    var lockReason: LockReason? = null,
+
     @Column(name = "LOCK_YN")
     private var locked: Boolean = false//계정잠김
 
@@ -86,6 +94,11 @@ class User(
         this.status = Status.WITHDRAW
     }
 
+    fun lockUser () {
+        this.locked = true
+//        this.status = Status.INACTIVE
+    }
+
 
     data class NewValue(
         val password: String? = null,
@@ -101,6 +114,11 @@ class User(
         this.locked = false
     }
 
+    fun updateLockCount(): Int {
+        this.lockCount += 1
+        return this.lockCount
+    }
+
     fun answer() = answer
     fun question()  =question
     fun nickName() = nickName
@@ -109,6 +127,7 @@ class User(
     fun failCnt() = failCnt
     fun locked() = locked
     fun role() = roles
+    fun lockReason() = lockReason
     fun checkActiveUser(): Boolean {
         return status().equals(Status.ACTIVE)
     }

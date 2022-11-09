@@ -96,6 +96,7 @@ class User(
 
     fun lockUser () {
         this.locked = true
+        this.lockCount = 3
 //        this.status = Status.INACTIVE
     }
 

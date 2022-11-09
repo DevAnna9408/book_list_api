@@ -3,6 +3,7 @@ package kr.co.book.list.api.controller.admin
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import kr.co.book.list.api.service.command.book.BookCommandService
+import kr.co.book.list.api.service.command.user.UserCommandService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class AdminController(
 
     private val bookCommandService: BookCommandService,
+    private val userCommandService: UserCommandService
 
     ) {
 
@@ -26,6 +28,16 @@ class AdminController(
     ): ResponseEntity<Nothing> {
         bookCommandService.deleteBookByAdmin(userOid, bookOid)
         return ResponseEntity.noContent().build()
+    }
+
+    @Operation(summary = "유저 제재")
+    @DeleteMapping("/user")
+    fun deleteUser(
+        @RequestParam("userOid") userOid: Long
+    ) : ResponseEntity<Nothing> {
+        userCommandService.deleteUserByAdmin(userOid)
+        return ResponseEntity.noContent().build()
+
     }
 
 }

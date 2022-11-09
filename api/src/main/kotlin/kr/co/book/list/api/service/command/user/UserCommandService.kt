@@ -3,6 +3,7 @@ package kr.co.book.list.api.service.command.user
 import kr.co.book.list.api.dto.user.*
 import kr.co.book.list.domain.model.LockReason
 import kr.co.book.list.domain.model.user.User
+import kr.co.book.list.domain.repository.book.BookRepository
 import kr.co.book.list.domain.repository.user.UserRepository
 import kr.co.book.list.lib.security.SecurityUtil
 import kr.co.book.list.lib.security.jwt.JwtGenerator
@@ -19,11 +20,12 @@ import java.time.format.DateTimeFormatter
 class UserCommandService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
+    private val bookRepository: BookRepository,
  /*   @Autowired
     private var resourceLoader: ResourceLoader,*/
 
-    @org.springframework.beans.factory.annotation .Value("\${front.url}")
-    private val frontUrl: String,
+//    @org.springframework.beans.factory.annotation .Value("\${front.url}")
+//    private val frontUrl: String,
 
 //    private val mailService: MailService,
 ) {
@@ -102,6 +104,14 @@ class UserCommandService(
     fun lockUser(user: User, reason: LockReason) {
         user.lockReason = reason
         user.lockUser()
+        val bookList = bookRepository.getListByUserOid(user.oid!!)
+        bookRepository.deleteAll(bookList)
+    }
+
+    fun deleteUserByAdmin(userOid: Long) {
+        SecurityUtil.checkManagerRole()
+        val dbUser = userRepository.getByOid(userOid)
+        lockUser(dbUser, LockReason.ACCUMULATED_REPORTS)
     }
 
 

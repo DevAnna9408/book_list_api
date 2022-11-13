@@ -5,6 +5,7 @@ import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.Expressions
 import kr.co.book.list.domain.model.book.Book
 import kr.co.book.list.domain.model.book.QBook
+import kr.co.book.list.domain.model.user.User
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -25,6 +26,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
             from(qBook)
                 .where(
                     qBook.deleted.isFalse,
+                    qBook.postUser.status.eq(User.Status.ACTIVE),
                     qBook.thumbsDown.lt(10)
                 )
                 .orderBy(
@@ -44,6 +46,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
             from(qBook)
                 .where(
                     qBook.deleted.isFalse,
+                    qBook.postUser.status.eq(User.Status.ACTIVE),
                     qBook.thumbsDown.lt(10)
                 )
                 .orderBy(
@@ -79,6 +82,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
             from(qBook)
                 .where(
                     qBook.deleted.isFalse,
+                    qBook.postUser.status.eq(User.Status.ACTIVE),
                     qBook.thumbsDown.lt(10),
                     qBook.postUser.oid.eq(userOid)
                 )
@@ -99,6 +103,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
             from(qBook)
                 .where(
                     qBook.deleted.isFalse,
+                    qBook.postUser.status.eq(User.Status.ACTIVE),
                     qBook.thumbsDown.lt(10)
                 )
                 .orderBy(
@@ -126,6 +131,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
         return from(qBook)
             .where(
                 qBook.deleted.isFalse,
+                qBook.postUser.status.eq(User.Status.ACTIVE),
                 qBook.oid.eq(bookOid)
             )
             .fetchOne()
@@ -135,6 +141,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
         return from(qBook)
             .where(
                 qBook.deleted.isFalse,
+                qBook.postUser.status.eq(User.Status.ACTIVE),
                 qBook.postUser.oid.eq(userOid)
             )
             .fetch() ?: emptyList()
@@ -144,6 +151,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
         return from(qBook)
             .where(
                 qBook.deleted.isFalse,
+                qBook.postUser.status.eq(User.Status.ACTIVE),
                 qBook.postUser.oid.eq(userOid),
                 qBook.oid.eq(bookOid)
             )
@@ -154,6 +162,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
         return from(qBook)
             .where(
                 qBook.postUser.oid.eq(userOid),
+                qBook.postUser.status.eq(User.Status.ACTIVE),
                 qBook.deleted.isFalse,
                 qBook.createdTime.eq(LocalDate.now())
             )

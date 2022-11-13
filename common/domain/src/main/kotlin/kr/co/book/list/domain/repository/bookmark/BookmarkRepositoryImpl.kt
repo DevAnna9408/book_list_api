@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression
 import kr.co.book.list.domain.model.book.Book
 import kr.co.book.list.domain.model.bookmark.Bookmark
 import kr.co.book.list.domain.model.bookmark.QBookmark
+import kr.co.book.list.domain.model.user.User
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
@@ -21,6 +22,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         val result = from(qBookmark)
             .where(
                 qBookmark.bookmarkUser.oid.eq(userOid),
+                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
                 qBookmark.book.deleted.isFalse,
                 eqIsWritten(isWritten, userOid)
             )
@@ -34,6 +36,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         return from(qBookmark)
             .where(
                 qBookmark.bookmarkUser.oid.eq(userOid),
+                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
                 qBookmark.book.deleted.isFalse,
                 qBookmark.book.oid.eq(bookOid)
             )
@@ -44,6 +47,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         return from(qBookmark)
             .where(
                 qBookmark.book.deleted.isFalse,
+                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
                 qBookmark.bookmarkUser.oid.eq(userOid)
             )
             .fetch()
@@ -53,6 +57,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         return from(qBookmark)
             .where(
                 qBookmark.bookmarkUser.oid.eq(userOid),
+                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
                 qBookmark.book.deleted.isFalse,
                 qBookmark.book.oid.eq(bookOid)
             )
@@ -63,6 +68,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         return from(qBookmark)
             .where(
                 qBookmark.book.deleted.isFalse,
+                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
                 qBookmark.bookmarkUser.oid.eq(userOid)
             )
             .fetch() ?: emptyList()
@@ -72,6 +78,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
         return from(qBookmark)
             .where(
                 qBookmark.book.oid.eq(bookOid),
+                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
                 qBookmark.book.deleted.isFalse
             )
             .fetch()

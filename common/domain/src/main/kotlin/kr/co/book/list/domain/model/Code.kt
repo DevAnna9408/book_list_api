@@ -25,7 +25,8 @@ enum class Role(private val korName: String, private val engName: String) : Enum
 
 enum class LockReason(private val korName: String, private val engName: String) : EnumModel {
 
-    ACCUMULATED_REPORTS("신고누적", "ACCUMULATED REPORTS");
+    ACCUMULATED_REPORTS("관리자 제재누적", "ACCUMULATED REPORTS"),
+    SIREN_USER("사용자 신고 누적", "SIREN_USER");
 
     override fun getKorName(): String {
         return korName

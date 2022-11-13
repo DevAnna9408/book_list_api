@@ -31,6 +31,9 @@ class Book (
     @Column(name = "DELETED")
     private var deleted: Boolean = false,
 
+    @Column(name = "SIREN_COUNT")
+    private var sirenCount: Int = 0,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_USER")
     private val postUser: User,
@@ -50,6 +53,12 @@ class Book (
     fun thumbsDown() = thumbsDown
     fun deleted() = deleted
     fun postUser() = postUser
+    fun sirenCount() = sirenCount
+
+    fun sirenBook() {
+        this.sirenCount += 1
+        if (this.sirenCount >= 10) deleteBook()
+    }
 
     fun _thumbsUp() {
         this.thumbsUp += 1

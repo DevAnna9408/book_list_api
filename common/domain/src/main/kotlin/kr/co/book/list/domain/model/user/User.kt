@@ -47,7 +47,10 @@ class User(
     var failCnt: Int = 0,// 로그인 실패횟수
 
     @Column(name = "LOCK_COUNT")
-    private var lockCount: Int = 0,// 사용자 신고 or 관리자 규제에 의한 잠금카운트
+    private var lockCount: Int = 0,// 관리자 규제에 의한 잠금카운트
+
+    @Column(name = "SIREN_COUNT")
+    private var sirenCount: Int = 0,// 관리자 규제에 의한 잠금카운트
 
     @Enumerated(EnumType.STRING)
     @Column(name = "LOCK_REASON")
@@ -100,6 +103,14 @@ class User(
 //        this.status = Status.INACTIVE
     }
 
+    fun sirenUser() {
+        this.sirenCount += 1
+        if (this.sirenCount >= 10) {
+            this.status = Status.INACTIVE
+            this.lockReason = LockReason.SIREN_USER
+        }
+    }
+
 
     data class NewValue(
         val password: String? = null,
@@ -129,6 +140,7 @@ class User(
     fun locked() = locked
     fun role() = roles
     fun lockReason() = lockReason
+    fun sirenCount() = sirenCount
     fun checkActiveUser(): Boolean {
         return status().equals(Status.ACTIVE)
     }

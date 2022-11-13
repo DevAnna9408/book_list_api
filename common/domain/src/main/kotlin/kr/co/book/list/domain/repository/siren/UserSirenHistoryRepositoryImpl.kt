@@ -5,7 +5,7 @@ import kr.co.book.list.domain.model.user.UserSirenHistory
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.time.LocalDate
 
-class UserSirenHistoryImpl: QuerydslRepositorySupport(UserSirenHistory::class.java), UserSirenHistoryRepositoryCustom {
+class UserSirenHistoryRepositoryImpl: QuerydslRepositorySupport(UserSirenHistory::class.java), UserSirenHistoryRepositoryCustom {
 
     private val qUserSirenHistory = QUserSirenHistory.userSirenHistory
     override fun findSirenCountByUserOid(userOid: Long): Long {

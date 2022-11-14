@@ -107,7 +107,9 @@ class SecurityConfig(
         configuration.addAllowedOriginPattern("http://localhost:3040")
         // 도메인이 2개
         configuration.addAllowedOriginPattern("http://thousandbook.xyz")
+        configuration.addAllowedOriginPattern("http://thousandbook.shop")
         configuration.addAllowedOriginPattern("http://www.thousandbook.xyz")
+        configuration.addAllowedOriginPattern("http://www.thousandbook.shop")
         configuration.addAllowedMethod("*")
         configuration.addAllowedHeader("*")
         configuration.allowCredentials = true

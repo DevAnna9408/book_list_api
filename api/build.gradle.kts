@@ -51,6 +51,8 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.security:spring-security-test")
 
+    implementation("com.google.firebase:firebase-admin:7.1.0")
+    implementation("org.projectlombok:lombok")
 
 }
 

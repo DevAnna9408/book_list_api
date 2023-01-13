@@ -54,7 +54,6 @@ dependencies {
 
     // Firebase
     implementation("com.google.firebase:firebase-admin:7.1.0")
-    implementation("org.projectlombok:lombok")
 
 }
 

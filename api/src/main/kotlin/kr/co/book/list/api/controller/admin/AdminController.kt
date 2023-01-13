@@ -4,11 +4,9 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import kr.co.book.list.api.service.command.book.BookCommandService
 import kr.co.book.list.api.service.command.user.UserCommandService
+import kr.co.book.list.api.service.firebase.NotificationScheduler
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "관리자 API")
 @RequestMapping("/api/admin")
@@ -16,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController
 class AdminController(
 
     private val bookCommandService: BookCommandService,
-    private val userCommandService: UserCommandService
+    private val userCommandService: UserCommandService,
+    private val notificationScheduler: NotificationScheduler
 
     ) {
 
@@ -38,6 +37,12 @@ class AdminController(
         userCommandService.deleteUserByAdmin(userOid)
         return ResponseEntity.noContent().build()
 
+    }
+
+    @Operation(summary = "FCM 푸시알림 발송")
+    @GetMapping("/fcm-message")
+    fun getFcmMessage () {
+        notificationScheduler.pushMorningAlarm()
     }
 
 }

@@ -138,14 +138,4 @@ class BookCommandService (
         val dbBook = bookRepository.getByOid(dbBooks.random()!!)
         return BookOut.fromEntity(dbBook)
     }
-
-    fun getRandomBookNoAuth(): BookOut {
-        val dbBooks = bookRepository.findAll()
-            .filter { !it.deleted() }
-            .map { it.oid }
-
-        if (dbBooks.isEmpty()) throw RuntimeException("아직 등록 된 글이 없어요 :(")
-        val dbBook = bookRepository.getByOid(dbBooks.random()!!)
-        return BookOut.fromEntity(dbBook)
-    }
 }

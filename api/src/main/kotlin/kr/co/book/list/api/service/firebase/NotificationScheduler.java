@@ -35,7 +35,7 @@ public class NotificationScheduler {
 
     public NotificationMessage getRandomMessage() {
 
-        String title = bookCommandService.getRandomBookNoAuth().getTitle();
+        String title = "따북!";
         String message = bookCommandService.getRandomBookNoAuth().getContent();
         return new NotificationMessage(title, message);
     }

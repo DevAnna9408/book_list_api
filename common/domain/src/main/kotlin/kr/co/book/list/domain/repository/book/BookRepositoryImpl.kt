@@ -17,69 +17,77 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
 
     private val qBook = QBook.book
     override fun getAllBookList(
-        sortParam: Boolean,
-        reverse: Boolean,
-        sort: Sort,
         pageable: Pageable
     ): Page<Book> {
-        val result = if (reverse) {
-            from(qBook)
+        val result = from(qBook)
                 .where(
                     qBook.deleted.isFalse,
                     qBook.postUser.status.eq(User.Status.ACTIVE),
                     qBook.thumbsDown.lt(10)
                 )
                 .orderBy(
-                    *sort.map {
-                        OrderSpecifier(
-                            if (it.isAscending) Order.ASC else Order.DESC,
-                            Expressions.path(String::class.java, qBook, it.property)
-                        )
-                    }
-                        .toList().toTypedArray()
-                )
-                .orderBy(
-                    qBook.createdTime.desc()
+                    qBook.oid.asc()
                 )
                 .fetchAll()
-        } else {
-            from(qBook)
-                .where(
-                    qBook.deleted.isFalse,
-                    qBook.postUser.status.eq(User.Status.ACTIVE),
-                    qBook.thumbsDown.lt(10)
-                )
-                .orderBy(
-                    *sort.map {
-                        OrderSpecifier(
-                            if (it.isAscending) Order.ASC else Order.DESC,
-                            Expressions.path(String::class.java, qBook, it.property)
-                        )
-                    }
-                        .toList().toTypedArray()
-                )
-                .orderBy(
-                    qBook.createdTime.asc()
-                )
-                .fetchAll()
-
-        }
-
 
         val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
         return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
 
     }
 
+    override fun getAllBookListReversed(pageable: Pageable): Page<Book> {
+        val result = from(qBook)
+            .where(
+                qBook.deleted.isFalse,
+                qBook.postUser.status.eq(User.Status.ACTIVE),
+                qBook.thumbsDown.lt(10)
+            )
+            .orderBy(
+                qBook.oid.desc()
+            )
+            .fetchAll()
+
+        val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
+        return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
+    }
+
+    override fun getAllBookListByThumbsUp(pageable: Pageable): Page<Book> {
+        val result = from(qBook)
+            .where(
+                qBook.deleted.isFalse,
+                qBook.postUser.status.eq(User.Status.ACTIVE),
+                qBook.thumbsDown.lt(10)
+            )
+            .orderBy(
+                qBook.thumbsUp.desc()
+            )
+            .fetchAll()
+
+        val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
+        return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
+    }
+
+    override fun getAllBookListByThumbsDown(pageable: Pageable): Page<Book> {
+        val result = from(qBook)
+            .where(
+                qBook.deleted.isFalse,
+                qBook.postUser.status.eq(User.Status.ACTIVE),
+                qBook.thumbsDown.lt(10)
+            )
+            .orderBy(
+                qBook.thumbsUp.asc()
+            )
+            .fetchAll()
+
+        val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
+        return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
+    }
+
     override fun getAllMyBookList(
         userOid: Long,
-        sortParam: Boolean,
-        reverse: Boolean,
-        sort: Sort,
         pageable: Pageable
     ): Page<Book> {
-        val result = if (reverse) {
-            from(qBook)
+        val result = from(qBook)
                 .where(
                     qBook.deleted.isFalse,
                     qBook.postUser.status.eq(User.Status.ACTIVE),
@@ -87,41 +95,9 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
                     qBook.postUser.oid.eq(userOid)
                 )
                 .orderBy(
-                    *sort.map {
-                        OrderSpecifier(
-                            if (it.isAscending) Order.ASC else Order.DESC,
-                            Expressions.path(String::class.java, qBook, it.property)
-                        )
-                    }
-                        .toList().toTypedArray()
-                )
-                .orderBy(
                     qBook.createdTime.desc()
                 )
                 .fetchAll()
-        } else {
-            from(qBook)
-                .where(
-                    qBook.deleted.isFalse,
-                    qBook.postUser.status.eq(User.Status.ACTIVE),
-                    qBook.thumbsDown.lt(10)
-                )
-                .orderBy(
-                    *sort.map {
-                        OrderSpecifier(
-                            if (it.isAscending) Order.ASC else Order.DESC,
-                            Expressions.path(String::class.java, qBook, it.property)
-                        )
-                    }
-                        .toList().toTypedArray()
-                )
-                .orderBy(
-                    qBook.createdTime.asc()
-                )
-                .fetchAll()
-
-        }
-
 
         val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
         return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }

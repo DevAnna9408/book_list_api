@@ -7,15 +7,15 @@ import org.springframework.data.domain.Sort
 
 interface BookRepositoryCustom {
     fun getAllBookList(
-        sortParam: Boolean,
-        reverse: Boolean,
-        sort: Sort,
+        pageable: Pageable): Page<Book>
+    fun getAllBookListReversed(
+        pageable: Pageable): Page<Book>
+    fun getAllBookListByThumbsUp(
+        pageable: Pageable): Page<Book>
+    fun getAllBookListByThumbsDown(
         pageable: Pageable): Page<Book>
     fun getAllMyBookList(
         userOid: Long,
-        sortParam: Boolean,
-        reverse: Boolean,
-        sort: Sort,
         pageable: Pageable): Page<Book>
     fun getByOid(bookOid: Long): Book
     fun getListByUserOid(userOid: Long): List<Book>

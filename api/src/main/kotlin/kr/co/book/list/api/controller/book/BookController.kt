@@ -80,23 +80,50 @@ class BookController (
         return ResponseEntity.noContent().build()
     }
 
-    @Operation(summary = "모든 책 목록 조회")
+    @Operation(summary = "오래된순 모든 책 목록 조회")
     @GetMapping("/list")
     fun getAllBookList(
         @RequestParam("userOid") userOid: Long,
-        @RequestParam("sortParam") sortParam: Boolean,
-        @RequestParam("reverse") reverse: Boolean,
         @ParameterObject pageable: Pageable
     ): ResponseEntity<Page<BookOut>> {
-        val sort = when(sortParam) {
-            true -> Sort.by(Sort.Order.asc("thumbsUp"))
-            else -> Sort.by(Sort.Order.asc("thumbsDown"))
-        }
         return ResponseEntity.ok(bookQueryService.getAllBookList(
             userOid,
-            sortParam,
-            reverse,
-            sort,
+            pageable
+        ))
+    }
+
+    @Operation(summary = "최신순 모든 책 목록 조회")
+    @GetMapping("/list/reverse")
+    fun getAllBookListReversed(
+        @RequestParam("userOid") userOid: Long,
+        @ParameterObject pageable: Pageable
+    ): ResponseEntity<Page<BookOut>> {
+        return ResponseEntity.ok(bookQueryService.getAllBookListReversed(
+            userOid,
+            pageable
+        ))
+    }
+
+    @Operation(summary = "추천 많은순 모든 책 목록 조회")
+    @GetMapping("/list/by-thumbs-up")
+    fun getAllBookListByThumbsUp(
+        @RequestParam("userOid") userOid: Long,
+        @ParameterObject pageable: Pageable
+    ): ResponseEntity<Page<BookOut>> {
+        return ResponseEntity.ok(bookQueryService.getAllBookListByThumbsUp(
+            userOid,
+            pageable
+        ))
+    }
+
+    @Operation(summary = "추천 낮은순 모든 책 목록 조회")
+    @GetMapping("/list/by-thumbs-down")
+    fun getAllBookListByThumbsDown(
+        @RequestParam("userOid") userOid: Long,
+        @ParameterObject pageable: Pageable
+    ): ResponseEntity<Page<BookOut>> {
+        return ResponseEntity.ok(bookQueryService.getAllBookListByThumbsDown(
+            userOid,
             pageable
         ))
     }
@@ -105,19 +132,10 @@ class BookController (
     @GetMapping("/my-list")
     fun getAllMyBookList(
         @RequestParam("userOid") userOid: Long,
-        @RequestParam("sortParam") sortParam: Boolean,
-        @RequestParam("reverse") reverse: Boolean,
         @ParameterObject pageable: Pageable
     ): ResponseEntity<Page<BookOut>> {
-        val sort = when(sortParam) {
-            true -> Sort.by(Sort.Order.asc("thumbsUp"))
-            else -> Sort.by(Sort.Order.asc("thumbsDown"))
-        }
         return ResponseEntity.ok(bookQueryService.getAllMyBookList(
             userOid,
-            sortParam,
-            reverse,
-            sort,
             pageable
         ))
     }

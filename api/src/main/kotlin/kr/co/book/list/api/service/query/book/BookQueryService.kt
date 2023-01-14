@@ -27,31 +27,47 @@ class BookQueryService(
 
     fun getAllBookList(
         userOid: Long,
-        sortParam: Boolean,
-        reverse: Boolean,
-        sort: Sort,
         pageable: Pageable): Page<BookOut> {
         SecurityUtil.checkUserOid(userOid)
         return bookRepository.getAllBookList(
-            sortParam,
-            reverse,
-            sort,
             pageable
         ).map { BookOut.fromEntity(it) }
     }
 
+    fun getAllBookListReversed(
+        userOid: Long,
+        pageable: Pageable): Page<BookOut> {
+        SecurityUtil.checkUserOid(userOid)
+        return bookRepository.getAllBookListReversed(
+            pageable
+        ).map { BookOut.fromEntity(it) }
+    }
+
+    fun getAllBookListByThumbsUp(
+        userOid: Long,
+        pageable: Pageable): Page<BookOut> {
+        SecurityUtil.checkUserOid(userOid)
+        return bookRepository.getAllBookListByThumbsUp(
+            pageable
+        ).map { BookOut.fromEntity(it) }
+    }
+
+    fun getAllBookListByThumbsDown(
+        userOid: Long,
+        pageable: Pageable): Page<BookOut> {
+        SecurityUtil.checkUserOid(userOid)
+        return bookRepository.getAllBookListByThumbsDown(
+            pageable
+        ).map { BookOut.fromEntity(it) }
+
+    }
+
     fun getAllMyBookList(
         userOid: Long,
-        sortParam: Boolean,
-        reverse: Boolean,
-        sort: Sort,
         pageable: Pageable): Page<BookOut> {
         SecurityUtil.checkUserOid(userOid)
         return bookRepository.getAllMyBookList(
             userOid,
-            sortParam,
-            reverse,
-            sort,
             pageable
         ).map { BookOut.fromEntity(it) }
     }

@@ -18,7 +18,7 @@ spring:
 jwt:
   base64EncodedSecret: YXBleHNvZnQtc3ByaW5nLWJvb3Qta290bGluLWZyYW1ld29yay12MS1qd3QtdG9rZW4ta2V5LWFwZXgyNzM5LWhzLWpo
   tokenDurationHr: 24
-  swaggerTokenDurationHr: 24
+  swaggerTokenDurationHr: 720
   generator.enabled: true
 
 login.failMaxCnt: 5 # 로그인 실패 횟수

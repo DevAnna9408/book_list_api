@@ -18,13 +18,11 @@ class BookmarkQueryService (
 
     fun getMyBookmark(
         userOid: Long,
-        isWritten: Boolean,
         pageable: Pageable
         ): Page<BookmarkOut> {
         SecurityUtil.checkUserOid(userOid)
         return bookmarkRepository.getBookmarkByUserOid(
             userOid,
-            isWritten,
             pageable
         ).map { BookmarkOut.fromEntity(it) }
     }

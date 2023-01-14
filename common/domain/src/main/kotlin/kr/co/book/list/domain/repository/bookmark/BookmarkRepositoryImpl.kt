@@ -15,7 +15,6 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
     private val qBookmark = QBookmark.bookmark
     override fun getBookmarkByUserOid(
         userOid: Long,
-        isWritten: Boolean,
         pageable: Pageable
         ): Page<Bookmark> {
 
@@ -23,8 +22,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
             .where(
                 qBookmark.bookmarkUser.oid.eq(userOid),
                 qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
-                qBookmark.book.deleted.isFalse,
-                eqIsWritten(isWritten, userOid)
+                qBookmark.book.deleted.isFalse
             )
             .fetchAll()
 
@@ -83,11 +81,4 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
             )
             .fetch()
     }
-
-    private fun eqIsWritten(isWritten: Boolean, userOid: Long): BooleanExpression? {
-        return if (!isWritten) null
-        else qBookmark.book.postUser.oid.eq(userOid)
-    }
-
-
 }

@@ -45,12 +45,10 @@ class BookmarkController (
     @GetMapping
     fun getMyBookmark (
         @RequestParam("userOid") userOid: Long,
-        @RequestParam("isWritten") isWritten: Boolean,
         @ParameterObject pageable: Pageable
     ): ResponseEntity<Page<BookmarkOut>> {
         return ResponseEntity.ok(bookmarkQueryService.getMyBookmark(
             userOid,
-            isWritten,
             pageable
             ))
     }

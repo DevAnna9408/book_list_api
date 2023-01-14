@@ -36,13 +36,12 @@ class BookCommandService (
 
         if (bookRepository.checkAlreadyPost(bookIn.userOid) >= 10) throw RuntimeException(MessageUtil.getMessage("ALREADY_POST"))
 
-        val book = try {
+        try {
             bookRepository.save(bookIn.toEntity(dbUser))
         } catch (e: RuntimeException) {
             e.stackTrace.toString()
             throw RuntimeException(MessageUtil.getMessage("ERROR"))
         }
-        bookmarkRepository.save(BookmarkIn.toEntity(dbUser, book))
     }
 
     fun thumbsUp(userOid: Long, bookOid: Long) {

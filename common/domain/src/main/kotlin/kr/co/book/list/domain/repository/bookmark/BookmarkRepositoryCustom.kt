@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable
 interface BookmarkRepositoryCustom {
     fun getBookmarkByUserOid(
         userOid: Long,
-        isWritten: Boolean,
         pageable: Pageable
         ): Page<Bookmark>
 

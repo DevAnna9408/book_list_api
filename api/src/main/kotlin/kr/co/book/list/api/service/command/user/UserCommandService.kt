@@ -79,13 +79,13 @@ class UserCommandService(
     /**
      * 비밀번호 찾기
      */
-    fun findQuestion(userId: String, nickName: String): String {
-        return userRepository.getByUserIdAndNickName(userId, nickName).question()
+    fun findQuestion(userId: String, nickName: String): String? {
+        return userRepository.getByUserIdAndNickName(userId, nickName)?.question()
     }
 
     fun answerPassword(userId: String, nickName: String, answer: String): Boolean {
         val dbUser = userRepository.getByUserIdAndNickName(userId, nickName)
-        return dbUser.answer() == answer.replace(" ", "")
+        return dbUser?.answer() == answer.replace(" ", "")
     }
 
     fun changePasswordAfterFind(userId: String, passwordIn: PasswordIn) {

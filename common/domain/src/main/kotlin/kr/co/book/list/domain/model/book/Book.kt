@@ -4,6 +4,7 @@ import kr.co.book.list.domain._common.AbstractEntity
 import kr.co.book.list.domain.converter.BooleanToYNConverter
 import kr.co.book.list.domain.model.bookmark.Bookmark
 import kr.co.book.list.domain.model.user.User
+import kr.co.book.list.domain.model.user.UserSirenHistory
 import javax.persistence.*
 
 @Entity
@@ -42,7 +43,10 @@ class Book (
     private val bookThumbs:MutableList<BookThumb> = mutableListOf(),
 
     @OneToMany(mappedBy = "book", cascade = [CascadeType.ALL], orphanRemoval = true)
-    private val bookMarks: MutableList<Bookmark> = mutableListOf()
+    private val bookMarks: MutableList<Bookmark> = mutableListOf(),
+
+    @OneToMany(mappedBy = "sirenedBook", cascade = [CascadeType.ALL], orphanRemoval = true)
+    private val sirenedBooks: MutableList<UserSirenHistory> = mutableListOf()
 
     ) : AbstractEntity(oid) {
 

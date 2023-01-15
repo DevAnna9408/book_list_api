@@ -39,7 +39,7 @@ class NotificationScheduler (
 
     fun getRandomMessage(): NotificationMessage {
         val title = "${bookCommandService.getRandomBookNoAuth().title}_${bookCommandService.getRandomBookNoAuth().author}"
-        val message = bookCommandService.getRandomBookNoAuth().content
+        val message = bookCommandService.getRandomBookNoAuth().content.replace("<br />", " ")
         return NotificationMessage(title, message)
     }
 

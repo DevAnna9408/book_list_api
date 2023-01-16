@@ -20,9 +20,8 @@ abstract class AbstractEntity(
 
 
     @CreatedDate
-    @Column(name = "CREATED_DATE", updatable = false, columnDefinition = "DATE")
+    @Column(name = "CREATED_DATE", columnDefinition = "DATE")
     protected lateinit var createdTime: LocalDate
-
 
     @Column(name = "CREATED_BY", updatable = false)
     @CreatedBy

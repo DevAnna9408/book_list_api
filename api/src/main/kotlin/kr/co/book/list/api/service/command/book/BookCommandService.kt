@@ -44,7 +44,7 @@ class BookCommandService (
         }
     }
 
-    fun thumbsUp(userOid: Long, bookOid: Long) {
+    fun thumbsUp(userOid: Long, bookOid: Long): BookOut {
         SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
@@ -64,9 +64,10 @@ class BookCommandService (
                 throw RuntimeException(MessageUtil.getMessage("ERROR"))
             }
         }
+        return BookOut.fromEntity(dbBook)
     }
 
-    fun thumbsDown(userOid: Long, bookOid: Long) {
+    fun thumbsDown(userOid: Long, bookOid: Long): BookOut {
         SecurityUtil.checkUserOid(userOid)
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
@@ -88,6 +89,7 @@ class BookCommandService (
                 throw RuntimeException(MessageUtil.getMessage("ERROR"))
             }
         }
+        return BookOut.fromEntity(dbBook)
     }
 
     fun deleteBook(userOid: Long, bookOid: Long) {

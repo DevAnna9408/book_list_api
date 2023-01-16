@@ -65,9 +65,8 @@ class BookController (
     fun thumbsUp(
         @RequestParam ("userOid") userOid: Long,
         @RequestParam ("bookOid") bookOid: Long
-    ): ResponseEntity<Nothing> {
-        bookCommandService.thumbsUp(userOid, bookOid)
-        return ResponseEntity.noContent().build()
+    ): ResponseEntity<BookOut> {
+        return ResponseEntity.ok(bookCommandService.thumbsUp(userOid, bookOid))
     }
 
     @Operation(summary = "비추천")
@@ -75,9 +74,8 @@ class BookController (
     fun thumbsDown(
         @RequestParam ("userOid") userOid: Long,
         @RequestParam ("bookOid") bookOid: Long
-    ): ResponseEntity<Nothing> {
-        bookCommandService.thumbsDown(userOid, bookOid)
-        return ResponseEntity.noContent().build()
+    ): ResponseEntity<BookOut> {
+        return ResponseEntity.ok(bookCommandService.thumbsDown(userOid, bookOid))
     }
 
     @Operation(summary = "오래된순 모든 책 목록 조회")

@@ -5,6 +5,7 @@ import kr.co.book.list.domain.converter.BooleanToYNConverter
 import kr.co.book.list.domain.model.bookmark.Bookmark
 import kr.co.book.list.domain.model.user.User
 import kr.co.book.list.domain.model.user.UserSirenHistory
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -75,6 +76,10 @@ class Book (
 
     fun deleteBook() {
         this.deleted = true
+    }
+
+    fun updateDate() {
+        this.createdTime = LocalDate.now()
     }
 
 }

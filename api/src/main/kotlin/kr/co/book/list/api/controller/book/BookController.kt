@@ -78,18 +78,6 @@ class BookController (
         return ResponseEntity.ok(bookCommandService.thumbsDown(userOid, bookOid))
     }
 
-    @Operation(summary = "오래된순 모든 책 목록 조회")
-    @GetMapping("/list")
-    fun getAllBookList(
-        @RequestParam("userOid") userOid: Long,
-        @ParameterObject pageable: Pageable
-    ): ResponseEntity<Page<BookOut>> {
-        return ResponseEntity.ok(bookQueryService.getAllBookList(
-            userOid,
-            pageable
-        ))
-    }
-
     @Operation(summary = "최신순 모든 책 목록 조회")
     @GetMapping("/list/reverse")
     fun getAllBookListReversed(
@@ -97,6 +85,18 @@ class BookController (
         @ParameterObject pageable: Pageable
     ): ResponseEntity<Page<BookOut>> {
         return ResponseEntity.ok(bookQueryService.getAllBookListReversed(
+            userOid,
+            pageable
+        ))
+    }
+
+    @Operation(summary = "오래된순 모든 책 목록 조회")
+    @GetMapping("/list")
+    fun getAllBookList(
+        @RequestParam("userOid") userOid: Long,
+        @ParameterObject pageable: Pageable
+    ): ResponseEntity<Page<BookOut>> {
+        return ResponseEntity.ok(bookQueryService.getAllBookList(
             userOid,
             pageable
         ))
@@ -144,5 +144,15 @@ class BookController (
         @RequestParam("userOid") userOid: Long
     ): ResponseEntity<PostCountAndThumbsUpOut> {
         return ResponseEntity.ok(bookQueryService.getPostCountAndThumbsUp(userOid))
+    }
+
+    @Operation(summary = "끌어올리기")
+    @GetMapping("/update-date")
+    fun updateDate (
+        @RequestParam("userOid") userOid: Long,
+        @RequestParam ("bookOid") bookOid: Long
+    ): ResponseEntity<Nothing> {
+        bookCommandService.updateDate(userOid, bookOid)
+        return ResponseEntity.noContent().build()
     }
 }

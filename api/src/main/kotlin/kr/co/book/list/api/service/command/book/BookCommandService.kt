@@ -149,4 +149,10 @@ class BookCommandService (
         val dbBook = bookRepository.getByOid(dbBooks.random()!!)
         return BookOut.fromEntity(dbBook)
     }
+
+    fun updateDate(userOid: Long, bookOid: Long) {
+        SecurityUtil.checkUserOid(userOid)
+        val dbBook = bookRepository.getByOid(bookOid)
+        dbBook.updateDate()
+    }
 }

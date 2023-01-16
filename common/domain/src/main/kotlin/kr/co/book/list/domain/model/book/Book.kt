@@ -79,7 +79,7 @@ class Book (
     }
 
     fun updateDate() {
-        this.createdTime = LocalDate.now()
+        this.lastModifiedTime = LocalDate.now()
     }
 
 }

@@ -43,7 +43,7 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
                 qBook.thumbsDown.lt(10)
             )
             .orderBy(
-                qBook.createdTime.desc()
+                qBook.lastModifiedTime.desc()
             )
             .fetchAll()
 

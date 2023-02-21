@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "commonCode-controller", description = "공통 코드성 조회 컨트롤러 ")
+@Tag(name = "공통 코드성 조회 컨트롤러")
 @RequestMapping("/api/common-code")
 @RestController
 class CommCodeController(

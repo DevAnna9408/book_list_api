@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration
 
 /**
  * 캐시 설정 클래스
- * 스프링 부트 기본인 EhCache 캐시 설정
+ * 스프링 부트 EhCache 캐시 설정
+ * 캐시 로그만 설정
  */
 @Configuration
 @EnableCaching
-class CacheConfig {
-}
+class CacheConfig
 
 class CacheLogger : CacheEventListener<Any, Any> {
 

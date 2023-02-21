@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 /**
- * enum 목록 조회시 사용할 enum등록
+ * enum 목록 조회시 사용할 enum등록 설정 Class
  */
 @Configuration
 class EnumMapperConfig {

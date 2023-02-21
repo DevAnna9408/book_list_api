@@ -8,5 +8,4 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration
 @ComponentScan(basePackages = ["kr.co.book.list.lib"])
-class CommonLibConfig {
-}
+class CommonLibConfig

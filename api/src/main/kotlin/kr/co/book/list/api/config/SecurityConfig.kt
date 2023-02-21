@@ -49,7 +49,9 @@ class SecurityConfig(
             .and()
             .csrf()
             .disable()
+            // API 통신 들어왔을 때 filter
             .addFilterBefore(JwtAuthFilter(jwtProcessor), UsernamePasswordAuthenticationFilter::class.java)
+            // 예외처리 및 접근 권한이 없을 때
             .exceptionHandling()
             .authenticationEntryPoint(JwtAuthenticationEntryPoint())
             .accessDeniedHandler(CustomAccessDeniedHandler())
@@ -57,16 +59,13 @@ class SecurityConfig(
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .antMatchers(HttpMethod.GET, "/").permitAll()
+            // API 통신이 가능한 목록 정의
             .antMatchers(*swaggerAllowedList()).permitAll()
-            .antMatchers(*actuatorAllowedList()).permitAll()
             .antMatchers(*devAllowedList()).permitAll()
             .antMatchers(HttpMethod.GET, *signAllowedList()).permitAll()
             .antMatchers(HttpMethod.POST, *signAllowedList()).permitAll()
+            .antMatchers(HttpMethod.PATCH, *signAllowedList()).permitAll()
             .antMatchers(HttpMethod.PUT, *signAllowedList()).permitAll()
-            .antMatchers(HttpMethod.GET, *findAllowedList()).permitAll()
-            .antMatchers(HttpMethod.PATCH, *changeAllowedList()).permitAll()
-            .antMatchers(HttpMethod.GET, *captchaAllowedList()).permitAll()
-            .antMatchers(HttpMethod.GET, *checkAllowedList()).permitAll()
             .antMatchers(*sysAdminAllowedList()).hasAnyRole("SYS_ADMIN")
             .anyRequest().authenticated()
             .and()
@@ -75,7 +74,10 @@ class SecurityConfig(
 
     }
 
-    class JwtAuthenticationEntryPoint() : AuthenticationEntryPoint {
+    /**
+     * 인증, 인가 실패 시 예외처리
+     **/
+    class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
         override fun commence(
             request: HttpServletRequest?,
             response: HttpServletResponse?,
@@ -98,14 +100,20 @@ class SecurityConfig(
         }
     }
 
+    /**
+     * 비밀번호 Encode
+     **/
     @Bean
     fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 
+
+    /**
+     * Cors 설정
+     **/
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource? {
         val configuration = CorsConfiguration()
         configuration.addAllowedOriginPattern("http://localhost:3040")
-        // 도메인이 2개
         configuration.addAllowedOriginPattern("http://thousandbook.xyz")
         configuration.addAllowedOriginPattern("http://www.thousandbook.xyz")
         configuration.addAllowedMethod("*")
@@ -133,6 +141,9 @@ class SecurityConfig(
     }
 
 
+    /**
+     * 로그인이 없어도 API 통신이 필요 한 회원관리 API 목록
+     **/
     private fun signAllowedList(): Array<String> {
         return arrayOf(
             "/api/sign-up",
@@ -140,55 +151,39 @@ class SecurityConfig(
             "/api/find-password",
             "/api/answer-password",
             "/api/change-password/**",
+            "/api/find/password",
+            "/api/{userId}/change-password-after-find",
+            "/api/captcha/success",
+            "/api/sign-up/check"
         )
     }
 
-    private fun findAllowedList(): Array<String> {
-        return arrayOf(
-            "/api/find/password"
-        )
-    }
-
-    private fun changeAllowedList(): Array<String> {
-        return arrayOf(
-            "/api/{userId}/change-password-after-find"
-        )
-    }
-
+    /**
+     * Swagger 사용을 위한 허용 목록
+     **/
     private fun swaggerAllowedList(): Array<String> {
         return arrayOf(
             "/v3/api-docs/**",
             "/v3/api-docs.yaml",
             "/swagger-ui/**",
-            "/swagger-ui.html"
-        )
-    }
-
-    private fun actuatorAllowedList(): Array<String> {
-        return arrayOf(
+            "/swagger-ui.html",
             "/management/health",
-            "/management/info",
+            "/management/info"
         )
     }
 
+    /**
+     * 개발시에만 확인 필요한 API 허용 목록
+     **/
     private fun devAllowedList(): Array<String> {
         return arrayOf(
-            "/h2-console/**",
+            "/h2-console/**"
         )
     }
-
-    private fun captchaAllowedList(): Array<String> {
-        return arrayOf(
-            "/api/captcha/success",
-        )
-    }
-
-    private fun checkAllowedList(): Array<String> {
-        return arrayOf(
-            "/api/sign-up/check",
-        )
-    }
-
+    
+    /**
+     * 관리자 API 호출 시 권한 체크
+     **/
     private fun sysAdminAllowedList(): Array<String> {
         return arrayOf(
             "/api/admin/**",

@@ -15,18 +15,18 @@ class UserController(
 ) {
 
     @Operation(summary = "회원 탈퇴")
-    @DeleteMapping("/{userOid}")
+    @DeleteMapping
     fun deleteUser(
-        @PathVariable("userOid") userOid: Long
+        @RequestParam("userOid") userOid: Long
     ): ResponseEntity<Nothing> {
         userCommandService.deleteUser(userOid)
         return ResponseEntity.noContent().build()
     }
 
     @Operation(summary = "사용자 닉네임 수정")
-    @PatchMapping("/nick-name/{userOid}")
+    @PatchMapping("/nick-name")
     fun updateUserId(
-        @PathVariable("userOid") userOid: Long,
+        @RequestParam("userOid") userOid: Long,
         @RequestParam("nickName") nickName: String?
     ): ResponseEntity<UserSimpleOut> {
         return ResponseEntity.ok(userCommandService.updateNickName(userOid, nickName))

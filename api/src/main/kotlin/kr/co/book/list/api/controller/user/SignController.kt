@@ -15,7 +15,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Tag(name = "회원 관리 API")
+@Tag(name = "회원 관리 API", description = "회원 정보가 등록되지 않았거나, 인증/인가 전")
 @RequestMapping("/api")
 @RestController
 class SignController(
@@ -41,7 +41,6 @@ class SignController(
     @GetMapping("/roles")
     fun getRoles(): ResponseEntity<Map<String, List<EnumValue>?>> {
         return ResponseEntity.ok(enumMapper["ROLE"])
-        // return ResponseEntity.ok(Role.values().map { EnumValue(it) })
     }
 
     @Operation(summary = "비밀번호 질문 찾기")
@@ -72,18 +71,5 @@ class SignController(
         userCommandService.changePasswordAfterFind(userId, passwordIn)
         return ResponseEntity.noContent().build()
     }
-
-//
-//    @Operation(summary = "비밀번호 찾기 이후 비밀번호 재설정")
-//    @PatchMapping("/{userId}/change-password-after-find")
-//    fun changePasswordAfterFind(
-//        @PathVariable("userId") userId: String,
-//        @RequestBody passwordIn: PasswordIn
-//    ): ResponseEntity<Nothing> {
-//        userCommandService.changePasswordAfterFind(userId, passwordIn)
-//        return ResponseEntity.noContent().build()
-//    }
-
-
 
 }

@@ -23,10 +23,4 @@ class BookThumb (
     @Column(name = "THUMB_YN")
     private val thumbYn: Boolean
 
-    ): AbstractEntity (oid){
-
-    fun thumbUser() = thumbUser
-    fun thumbBook() = thumbBook
-    fun thumbYn() = thumbYn
-
-}
+    ): AbstractEntity (oid)

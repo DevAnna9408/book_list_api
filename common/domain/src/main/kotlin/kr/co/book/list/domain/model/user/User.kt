@@ -21,7 +21,7 @@ class User(
     oid: Long? = null, //pk
 
     @Column(name = "USER_ID")
-    val userId: String, //수정불가
+    val userId: String,
 
     @Column(name = "nickName")
     private var nickName: String,
@@ -50,7 +50,7 @@ class User(
     private var lockCount: Int = 0,// 관리자 규제에 의한 잠금카운트
 
     @Column(name = "SIREN_COUNT")
-    private var sirenCount: Int = 0,// 관리자 규제에 의한 잠금카운트
+    private var sirenCount: Int = 0,// 신고 카운트
 
     @Enumerated(EnumType.STRING)
     @Column(name = "LOCK_REASON")
@@ -84,15 +84,6 @@ class User(
         this.password = password
     }
 
-
-    fun updateWith(n: NewValue) {
-        if (!n.password.isNullOrBlank()) this.password = n.password
-        this.status = n.status
-        this.failCnt = n.failCnt
-        this.locked = n.locked
-        this.roles = n.roles
-    }
-
     fun deleteUser() {
         this.status = Status.WITHDRAW
     }
@@ -100,7 +91,6 @@ class User(
     fun lockUser () {
         this.locked = true
         this.lockCount = 3
-//        this.status = Status.INACTIVE
     }
 
     fun sirenUser() {
@@ -110,15 +100,6 @@ class User(
             this.lockReason = LockReason.SIREN_USER
         }
     }
-
-
-    data class NewValue(
-        val password: String? = null,
-        val roles: MutableList<Role> = mutableListOf(Role.ROLE_USER),
-        var status: Status = Status.ACTIVE,
-        val failCnt: Int = 0,
-        val locked: Boolean = false
-    )
 
     fun reset() {
         this.status = Status.ACTIVE
@@ -136,18 +117,10 @@ class User(
     fun nickName() = nickName
     fun password() = password
     fun status() = status
-    fun failCnt() = failCnt
     fun locked() = locked
     fun role() = roles
-    fun lockReason() = lockReason
-    fun sirenCount() = sirenCount
     fun checkActiveUser(): Boolean {
-        return status().equals(Status.ACTIVE)
-    }
-
-    fun unlock() {
-        this.failCnt = 0
-        this.locked = false
+        return status() == Status.ACTIVE
     }
 
     // 캡챠

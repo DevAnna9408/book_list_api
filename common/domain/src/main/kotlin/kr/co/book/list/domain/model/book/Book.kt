@@ -58,7 +58,6 @@ class Book (
     fun thumbsDown() = thumbsDown
     fun deleted() = deleted
     fun postUser() = postUser
-    fun sirenCount() = sirenCount
 
     fun sirenBook() {
         this.sirenCount += 1

@@ -29,12 +29,4 @@ class UserSirenHistory(
     @Column(name = "SIREN_DATE")
     private val sirenDate: LocalDate = LocalDate.now()
 
-) : AbstractEntity(oid) {
-
-    fun sirenUser() = sirenUser
-    fun sirenedUser() = sirenedUser
-    fun sirenedBook() = sirenedBook
-    fun reason() = reason
-    fun sirenDate() = sirenDate
-
-}
+) : AbstractEntity(oid)

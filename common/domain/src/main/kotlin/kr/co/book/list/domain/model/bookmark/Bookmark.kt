@@ -21,6 +21,5 @@ class Bookmark (
 
         ) : AbstractEntity(oid){
 
-    fun bookmarkUser() = bookmarkUser
     fun book() = book
 }

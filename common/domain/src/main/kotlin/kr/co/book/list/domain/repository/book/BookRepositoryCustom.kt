@@ -10,10 +10,6 @@ interface BookRepositoryCustom {
         pageable: Pageable): Page<Book>
     fun getAllBookListReversed(
         pageable: Pageable): Page<Book>
-    fun getAllBookListByThumbsUp(
-        pageable: Pageable): Page<Book>
-    fun getAllBookListByThumbsDown(
-        pageable: Pageable): Page<Book>
     fun getAllMyBookList(
         userOid: Long,
         pageable: Pageable): Page<Book>

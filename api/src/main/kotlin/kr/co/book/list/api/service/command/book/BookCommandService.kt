@@ -28,6 +28,7 @@ class BookCommandService (
 
     fun createBook(bookIn: BookIn) {
         SecurityUtil.checkUserOid(bookIn.userOid)
+
         if (bookIn.content.isBlank()) throw RuntimeException(MessageUtil.getMessage("CONTENT_IS_NULL_OR_BLANK"))
         if (bookIn.author.isBlank()) throw RuntimeException(MessageUtil.getMessage("AUTHOR_IS_NULL_OR_BLANK"))
         if (bookIn.title.isBlank()) throw RuntimeException(MessageUtil.getMessage("TITLE_IS_NULL_OR_BLANK"))
@@ -94,15 +95,11 @@ class BookCommandService (
 
     fun deleteBook(userOid: Long, bookOid: Long) {
         SecurityUtil.checkUserOid(userOid)
-        if (bookRepository.checkByUserOidAndBookOid(userOid, bookOid) < 1) throw RuntimeException(MessageUtil.getMessage("NOT_MINE"))
+        if (bookRepository.checkByUserOidAndBookOid(userOid, bookOid) < 1) throw RuntimeException(MessageUtil.getMessage("DELETE_ONLY_MY_BOOK"))
 
         val dbBook = bookRepository.getByOid(bookOid)
-//        val dbBookmarks = bookmarkRepository.getAllByOid(bookOid)
-//        val dbBookThumbs = bookThumbRepository.getAllByBookOid(bookOid)
 
         try {
-//            bookThumbRepository.deleteAll(dbBookThumbs)
-//            bookmarkRepository.deleteAll(dbBookmarks)
             bookRepository.delete(dbBook)
         } catch (
             e: RuntimeException
@@ -135,7 +132,7 @@ class BookCommandService (
             .filter { !it.deleted() }
             .map { it.oid }
 
-        if (dbBooks.isEmpty()) throw RuntimeException("아직 등록 된 글이 없어요 :(")
+        if (dbBooks.isEmpty()) throw RuntimeException("THERE_ARE_NOT_ANY_POST")
         val dbBook = bookRepository.getByOid(dbBooks.random()!!)
         return BookOut.fromEntity(dbBook)
     }
@@ -145,7 +142,7 @@ class BookCommandService (
             .filter { !it.deleted() }
             .map { it.oid }
 
-        if (dbBooks.isEmpty()) throw RuntimeException("아직 등록 된 글이 없어요 :(")
+        if (dbBooks.isEmpty()) throw RuntimeException("THERE_ARE_NOT_ANY_POST")
         val dbBook = bookRepository.getByOid(dbBooks.random()!!)
         return BookOut.fromEntity(dbBook)
     }

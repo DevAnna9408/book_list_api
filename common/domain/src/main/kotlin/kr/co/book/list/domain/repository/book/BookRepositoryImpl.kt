@@ -51,38 +51,6 @@ class BookRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookRepos
         return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
     }
 
-    override fun getAllBookListByThumbsUp(pageable: Pageable): Page<Book> {
-        val result = from(qBook)
-            .where(
-                qBook.deleted.isFalse,
-                qBook.postUser.status.eq(User.Status.ACTIVE),
-                qBook.thumbsDown.lt(10)
-            )
-            .orderBy(
-                qBook.thumbsUp.desc()
-            )
-            .fetchAll()
-
-        val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
-        return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
-    }
-
-    override fun getAllBookListByThumbsDown(pageable: Pageable): Page<Book> {
-        val result = from(qBook)
-            .where(
-                qBook.deleted.isFalse,
-                qBook.postUser.status.eq(User.Status.ACTIVE),
-                qBook.thumbsDown.lt(10)
-            )
-            .orderBy(
-                qBook.thumbsUp.asc()
-            )
-            .fetchAll()
-
-        val pagedResult = querydsl!!.applyPagination(pageable, result).fetch() ?: emptyList()
-        return PageableExecutionUtils.getPage(pagedResult, pageable) { result.fetchCount() }
-    }
-
     override fun getAllMyBookList(
         userOid: Long,
         pageable: Pageable

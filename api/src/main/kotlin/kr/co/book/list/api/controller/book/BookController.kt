@@ -25,7 +25,7 @@ class BookController (
         ) {
 
     @Operation(summary = "책 10개이상 작성 체크")
-    @GetMapping("/check")
+    @GetMapping("/check-already-post")
     fun checkAlreadyPost(
         @RequestParam("userOid") userOid: Long
     ) : ResponseEntity<Nothing> {
@@ -97,30 +97,6 @@ class BookController (
         @ParameterObject pageable: Pageable
     ): ResponseEntity<Page<BookOut>> {
         return ResponseEntity.ok(bookQueryService.getAllBookList(
-            userOid,
-            pageable
-        ))
-    }
-
-    @Operation(summary = "추천 많은순 모든 책 목록 조회")
-    @GetMapping("/list/by-thumbs-up")
-    fun getAllBookListByThumbsUp(
-        @RequestParam("userOid") userOid: Long,
-        @ParameterObject pageable: Pageable
-    ): ResponseEntity<Page<BookOut>> {
-        return ResponseEntity.ok(bookQueryService.getAllBookListByThumbsUp(
-            userOid,
-            pageable
-        ))
-    }
-
-    @Operation(summary = "추천 낮은순 모든 책 목록 조회")
-    @GetMapping("/list/by-thumbs-down")
-    fun getAllBookListByThumbsDown(
-        @RequestParam("userOid") userOid: Long,
-        @ParameterObject pageable: Pageable
-    ): ResponseEntity<Page<BookOut>> {
-        return ResponseEntity.ok(bookQueryService.getAllBookListByThumbsDown(
             userOid,
             pageable
         ))

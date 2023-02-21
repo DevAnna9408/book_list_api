@@ -43,25 +43,6 @@ class BookQueryService(
         ).map { BookOut.fromEntity(it) }
     }
 
-    fun getAllBookListByThumbsUp(
-        userOid: Long,
-        pageable: Pageable): Page<BookOut> {
-        SecurityUtil.checkUserOid(userOid)
-        return bookRepository.getAllBookListByThumbsUp(
-            pageable
-        ).map { BookOut.fromEntity(it) }
-    }
-
-    fun getAllBookListByThumbsDown(
-        userOid: Long,
-        pageable: Pageable): Page<BookOut> {
-        SecurityUtil.checkUserOid(userOid)
-        return bookRepository.getAllBookListByThumbsDown(
-            pageable
-        ).map { BookOut.fromEntity(it) }
-
-    }
-
     fun getAllMyBookList(
         userOid: Long,
         pageable: Pageable): Page<BookOut> {

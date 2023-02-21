@@ -1,11 +1,6 @@
 server:
   port: 8096
-#  ssl:
-#    enabled: true
-#    key-store: keystore.p12
-#    key-store-password: annaHome
-#    key-store-type: PKCS12
-#    key-alias: bns-ssl
+
 spring:
   profiles:
     include:
@@ -16,7 +11,7 @@ spring:
     max-request-size:  20MB
 
 jwt:
-  base64EncodedSecret: YXBleHNvZnQtc3ByaW5nLWJvb3Qta290bGluLWZyYW1ld29yay12MS1qd3QtdG9rZW4ta2V5LWFwZXgyNzM5LWhzLWpo
+  base64EncodedSecret: eyJzdWIiOiJib29rLWxpc3QtdXNlciIsIm5hbWUiOiJEZXYgQW5uYSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9
   tokenDurationHr: 24
   swaggerTokenDurationHr: 24
   generator.enabled: true

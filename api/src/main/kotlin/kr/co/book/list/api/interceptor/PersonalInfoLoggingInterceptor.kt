@@ -18,10 +18,8 @@ import javax.servlet.http.HttpServletResponse
  * CustomServletWrapperFilter 참고
  */
 class PersonalInfoLoggingInterceptor(
-    private val queryLogRepository: QueryLogRepository,
-    private val om: ObjectMapper,
+    private val queryLogRepository: QueryLogRepository
 ) : HandlerInterceptor {
-
 
     override fun postHandle(
         request: HttpServletRequest,
@@ -45,24 +43,8 @@ class PersonalInfoLoggingInterceptor(
                         )
                 }
             }
-            for (apiUri in downloadTargetUris()) {
-                if (request.method == HttpMethod.GET.name && requestURI.contains(apiUri) && response.status >= 200 && response.status < 300) {
-                    /*val jsonNode: JsonNode = om.readTree(wrappingResponse.contentAsByteArray)
-                    val applIds = jsonNode.findValues("applId")*/
-                    /* if (applIds.isNotEmpty()) {*/
-                        val queryLog = QueryLog(
-                            url = requestURI,
-                            userId = currentUserId,
-                            action = QueryLog.Action.DOWNLOAD,
-                        )
-                        queryLogRepository.save(
-                            queryLog
-                        )
-                 /*   }*/
-                }
-            }
         } catch (t: Throwable) {
-            log.error("Query Log 에러", t)
+            log.error("Query Log Error", t)
         }
         wrappingResponse.copyBodyToResponse()
     }
@@ -71,12 +53,6 @@ class PersonalInfoLoggingInterceptor(
     fun queryTargetUris(): List<String> {
         return listOf(
             "/api/admin/users/all"
-        )
-    }
-
-    fun downloadTargetUris(): List<String> {
-        return listOf(
-            "/api/admin/down/excel"
         )
     }
 

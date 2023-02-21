@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 
-@EnableScheduling
+@EnableScheduling // Spring Scheduler 사용 어노테이션
 @ConfigurationPropertiesScan
 @SpringBootApplication(
     scanBasePackages = ["kr.co.book.list.domain", "kr.co.book.list.lib", "kr.co.book.list.api"]

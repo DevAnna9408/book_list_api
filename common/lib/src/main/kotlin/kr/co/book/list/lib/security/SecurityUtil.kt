@@ -8,9 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder
 object SecurityUtil {
 
     private fun authUser(): AuthUser {
-        val authUser = SecurityContextHolder.getContext().authentication.principal as? AuthUser
+        return SecurityContextHolder.getContext().authentication.principal as? AuthUser
             ?: throw RuntimeException(MessageUtil.getMessage("UNAUTHENTICATED_USER"))
-        return authUser
     }
 
 
@@ -18,14 +17,6 @@ object SecurityUtil {
         val authUser = authUser()
         if (authUser.isFreePass()) return
         if (authUser.userOid != userOid) {
-            throw AccessDeniedException(MessageUtil.getMessage("UNAUTHORIZED_ACCESS"))
-        }
-    }
-
-    fun checkUserId(userId: String) {
-        val authUser = authUser()
-        if (authUser.isFreePass()) return
-        if (authUser.userId != userId) {
             throw AccessDeniedException(MessageUtil.getMessage("UNAUTHORIZED_ACCESS"))
         }
     }

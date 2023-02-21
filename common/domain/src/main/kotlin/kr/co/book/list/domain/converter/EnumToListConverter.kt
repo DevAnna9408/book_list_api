@@ -2,10 +2,12 @@ package kr.co.book.list.domain.converter
 
 import kr.co.book.list.domain._common.EnumModel
 import javax.persistence.AttributeConverter
+import javax.persistence.Converter
 
 /**
  * 콤마로 구분된 데이터들을 객체에서 컬렉션으로 변환
  */
+@Converter
 open class EnumToListConverter(private var targetEnumClass: Class<out EnumModel>) :
     AttributeConverter<List<EnumModel>, String> {
 

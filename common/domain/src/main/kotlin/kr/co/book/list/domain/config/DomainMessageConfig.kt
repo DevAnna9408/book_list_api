@@ -10,6 +10,9 @@ import org.springframework.web.servlet.LocaleResolver
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver
 import java.util.*
 
+/**
+ * Domain 디렉토리에서 사용 할 메세지 설정 Class
+ **/
 @Configuration
 class DomainMessageConfig {
 
@@ -38,7 +41,7 @@ class DomainMessageConfig {
 
     @Bean
     fun messageUtilsDomain() {
-        DomainMessageUtil.messageSourceAccessorDomain = messageSourceAccessorDomain()!!
+        DomainMessageUtil.messageSourceAccessorDomain = messageSourceAccessorDomain()
     }
 
 }

@@ -32,12 +32,12 @@ class MessageConfig {
 
     @Bean
     fun messageSourceAccessor(): MessageSourceAccessor {
-        return MessageSourceAccessor(messageSource()!!)
+        return MessageSourceAccessor(messageSource())
     }
 
     @Bean
     fun messageUtils() {
-        MessageUtil.messageSourceAccessor = messageSourceAccessor()!!
+        MessageUtil.messageSourceAccessor = messageSourceAccessor()
     }
 
 }

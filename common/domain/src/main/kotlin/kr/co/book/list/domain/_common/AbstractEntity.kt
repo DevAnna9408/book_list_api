@@ -9,7 +9,10 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
-
+/**
+ * 생성날짜 등 모든 엔터티에 공통으로 들어갈
+ * 컬럼 설정
+ **/
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
 abstract class AbstractEntity(
@@ -17,7 +20,6 @@ abstract class AbstractEntity(
     @Column(name = "OID")
     val oid: Long?
 ) {
-
 
     @CreatedDate
     @Column(name = "CREATED_DATE", updatable = false, columnDefinition = "DATE")

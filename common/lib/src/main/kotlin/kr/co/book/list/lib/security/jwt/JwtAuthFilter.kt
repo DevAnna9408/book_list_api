@@ -8,6 +8,9 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+/**
+ * JWT 인증 필터
+ **/
 class JwtAuthFilter(private val jwtProcessor: JwtProcessor) :
     OncePerRequestFilter() {
 
@@ -37,6 +40,9 @@ class JwtAuthFilter(private val jwtProcessor: JwtProcessor) :
         } else null
     }
 
+    /**
+     * JWT 인증을 무시할 목록
+     **/
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         val orRequestMatcher = OrRequestMatcher(
             jwtExemptionList()

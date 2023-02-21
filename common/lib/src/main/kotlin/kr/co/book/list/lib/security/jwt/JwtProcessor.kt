@@ -23,7 +23,7 @@ class JwtProcessor(
 ) {
     /**
      * jwt 문자열을 파싱하고 사용자 정보를 UsernamePasswordAuthenticationToken 에 담아 반환
-     * UsernamePasswordAuthenticationToken 는 JwtFilter를 통해 Spring Security Context 에 저장되고,
+     * UsernamePasswordAuthenticationToken 는 JwtFilter를 통해 Spring Security Context에 저장되고,
      * SecurityContextHolder.getContext().authentication 로 꺼내서 사용 가능
      */
     fun extractAuthentication(jwt: String): UsernamePasswordAuthenticationToken {

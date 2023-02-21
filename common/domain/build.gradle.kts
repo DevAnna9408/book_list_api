@@ -5,7 +5,6 @@ plugins {
     id("org.springframework.boot") version "2.5.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
-//    kotlin("jvm") version "1.5.21"
     kotlin("jvm")
     kotlin("kapt")
     kotlin("plugin.spring") version "1.5.21"
@@ -70,6 +69,7 @@ allOpen {
 }
 
 val generatedQuerydslDir = "$buildDir/generated/source/kapt/main"
+
 // 아래와 같이 지정해도 Q클래스 가 kaptKotlin/querydsl 아래에 생기지 않고 kapt/main 아래에 생성된다
 //val generatedQuerydslDir = "$buildDir/generated/source/kaptKotlin/querydsl"
 

@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
- * http req, res 를 여러번 읽을 수 있도록 ContentCaching Wrapper 사요
- *
+ * http req, res 를 여러번 읽을 수 있도록 ContentCaching Wrapper 사용
  * 참고: https://hirlawldo.tistory.com/44
  */
 @Component
@@ -24,6 +23,6 @@ class CustomServletWrapperFilter : OncePerRequestFilter() {
         val wrappingRequest = ContentCachingRequestWrapper(request)
         val wrappingResponse = ContentCachingResponseWrapper(response)
         filterChain.doFilter(wrappingRequest, wrappingResponse)
-        wrappingResponse.copyBodyToResponse();
+        wrappingResponse.copyBodyToResponse()
     }
 }

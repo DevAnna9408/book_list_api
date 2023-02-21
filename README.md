@@ -1,5 +1,3 @@
-
-
 # 프레임워크 API Project
 
 - Kotlin, Gradle, Spring Boot MVC, JPA 기반의 웹 애플리케이션

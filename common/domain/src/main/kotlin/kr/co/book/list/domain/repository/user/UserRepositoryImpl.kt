@@ -2,7 +2,6 @@ package kr.co.book.list.domain.repository.user
 
 import com.querydsl.core.types.dsl.BooleanExpression
 import kr.co.book.list.domain._common.DomainMessageUtil
-import kr.co.book.list.domain._common.containsName
 import kr.co.book.list.domain.exception.DomainEntityNotFoundException
 import kr.co.book.list.domain.model.user.QUser
 import kr.co.book.list.domain.model.user.User

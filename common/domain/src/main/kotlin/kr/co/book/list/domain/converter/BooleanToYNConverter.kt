@@ -5,7 +5,8 @@ import javax.persistence.Converter
 
 /**
  * DB data 'Y/N' 과 객체 boolean 컨버터
- * 글로벌 설정
+ * 글로벌 설정이므로 Boolean 속성마다
+ * 어노테이션을 추가하지 않아도 된다.
  */
 @Converter(autoApply = true)
 class BooleanToYNConverter: AttributeConverter<Boolean, String> {

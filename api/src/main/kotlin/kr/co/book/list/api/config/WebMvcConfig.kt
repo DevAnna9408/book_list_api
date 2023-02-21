@@ -14,18 +14,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
  */
 @Configuration
 class WebMvcConfig(
-    private val queryLogRepository: QueryLogRepository,
-    private val om: ObjectMapper,
+    private val queryLogRepository: QueryLogRepository
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
 
         //로깅
-        val logInterceptor = PersonalInfoLoggingInterceptor(queryLogRepository, om)
+        val logInterceptor = PersonalInfoLoggingInterceptor(queryLogRepository)
         registry.addInterceptor(logInterceptor)
             .addPathPatterns(
                 *logInterceptor.queryTargetUris().toTypedArray(),
-                *logInterceptor.downloadTargetUris().toTypedArray(),
                 "/api/admin/**",  // PathVariable 사용하는 경우 별도로 /** 추가 필요
             )
     }

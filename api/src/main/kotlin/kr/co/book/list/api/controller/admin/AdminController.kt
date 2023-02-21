@@ -22,7 +22,7 @@ class AdminController(
 
     @Operation(summary = "책 삭제")
     @DeleteMapping("/book")
-    fun deleteBook(
+    fun deleteBookByAdmin(
         @RequestParam("userOid") userOid: Long,
         @RequestParam("bookOid") bookOid: Long
     ): ResponseEntity<Nothing> {
@@ -32,7 +32,7 @@ class AdminController(
 
     @Operation(summary = "유저 제재")
     @DeleteMapping("/user")
-    fun deleteUser(
+    fun deleteUserByAdmin(
         @RequestParam("userOid") userOid: Long
     ) : ResponseEntity<Nothing> {
         userCommandService.deleteUserByAdmin(userOid)

@@ -41,12 +41,12 @@ class BookmarkCommandService (
         val dbBookmark = bookmarkRepository.getByUserOidAndBookOid(userOid, bookOid)
 
         try {
-            bookmarkRepository.delete(dbBookmark!!)
+            bookmarkRepository.delete(dbBookmark)
         } catch (
             e: RuntimeException
         ) {
             e.stackTrace.toString()
-            throw RuntimeException(MessageUtil.getMessage("ERROR_DELETE_BOOKMARK") + " " + MessageUtil.getMessage("JUST_MSG"))
+            throw RuntimeException(MessageUtil.getMessage("ERROR_DELETE_BOOKMARK") + " " + MessageUtil.getMessage("ASK_FOR_DEVELOPER"))
 
         }
 

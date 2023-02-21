@@ -12,7 +12,7 @@ interface BookmarkRepositoryCustom {
         ): Page<Bookmark>
 
     fun getByUserOidAndBookOid(userOid: Long, bookOid: Long): Bookmark
-    fun getBookOidsInBookmark(userOid: Long): List<Bookmark>
+    fun getBookOidsWhereBookmark(userOid: Long): List<Bookmark>
     fun checkIsAlreadyExists(userOid: Long, bookOid: Long): Long
     fun getByUserOid(userOid: Long): List<Bookmark>
     fun getAllByOid(bookOid: Long): List<Bookmark>

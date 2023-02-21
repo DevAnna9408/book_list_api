@@ -41,7 +41,7 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
             .fetchOne()
     }
 
-    override fun getBookOidsInBookmark(userOid: Long): List<Bookmark> {
+    override fun getBookOidsWhereBookmark(userOid: Long): List<Bookmark> {
         return from(qBookmark)
             .where(
                 qBookmark.book.deleted.isFalse,

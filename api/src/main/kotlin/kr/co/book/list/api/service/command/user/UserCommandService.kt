@@ -72,7 +72,7 @@ class UserCommandService(
             e: RuntimeException
         ) {
             e.stackTrace.toString()
-            throw RuntimeException(MessageUtil.getMessage("DELETE_USER") + " " + MessageUtil.getMessage("JUST_MSG"))
+            throw RuntimeException(MessageUtil.getMessage("DELETE_USER") + " " + MessageUtil.getMessage("ASK_FOR_DEVELOPER"))
         }
     }
 

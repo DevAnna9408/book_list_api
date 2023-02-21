@@ -16,7 +16,7 @@ class BookmarkQueryService (
 
         ) {
 
-    fun getMyBookmark(
+    fun getMyBookmarksByPage(
         userOid: Long,
         pageable: Pageable
         ): Page<BookmarkOut> {
@@ -27,8 +27,8 @@ class BookmarkQueryService (
         ).map { BookmarkOut.fromEntity(it) }
     }
 
-    fun getBookOidsInBookmark(userOid: Long): List<Long> {
+    fun getBookOidsWhereBookmark(userOid: Long): List<Long> {
         SecurityUtil.checkUserOid(userOid)
-        return bookmarkRepository.getBookOidsInBookmark(userOid).map { it.book().oid!! }
+        return bookmarkRepository.getBookOidsWhereBookmark(userOid).map { it.book().oid!! }
     }
 }

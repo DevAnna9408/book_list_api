@@ -114,8 +114,6 @@ class SecurityConfig(
     fun corsConfigurationSource(): CorsConfigurationSource? {
         val configuration = CorsConfiguration()
         configuration.addAllowedOriginPattern("http://localhost:3040")
-        configuration.addAllowedOriginPattern("http://thousandbook.xyz")
-        configuration.addAllowedOriginPattern("http://www.thousandbook.xyz")
         configuration.addAllowedMethod("*")
         configuration.addAllowedHeader("*")
         configuration.allowCredentials = true
@@ -180,7 +178,7 @@ class SecurityConfig(
             "/h2-console/**"
         )
     }
-    
+
     /**
      * 관리자 API 호출 시 권한 체크
      **/

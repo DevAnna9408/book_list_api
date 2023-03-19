@@ -11,7 +11,7 @@ spring:
     max-request-size:  20MB
 
 jwt:
-  base64EncodedSecret: eyJzdWIiOiJib29rLWxpc3QtdXNlciIsIm5hbWUiOiJEZXYgQW5uYSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9
+  base64EncodedSecret:
   tokenDurationHr: 24
   swaggerTokenDurationHr: 24
   generator.enabled: true

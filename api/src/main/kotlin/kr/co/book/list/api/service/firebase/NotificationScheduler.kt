@@ -28,7 +28,7 @@ class NotificationScheduler (
     @Throws(IOException::class)
     fun firebaseSetting() {
         val googleCredentials =
-            GoogleCredentials.fromStream(ClassPathResource("firebase/booklet-4f7dc-firebase-adminsdk-ahir3-570a89c9d8.json").inputStream)
+            GoogleCredentials.fromStream(ClassPathResource("firebase/.json").inputStream)
                 .createScoped(listOf("https://www.googleapis.com/auth/firebase.messaging"))
         val secondaryAppConfig = FirebaseOptions.builder()
             .setCredentials(googleCredentials)

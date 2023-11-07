@@ -19,9 +19,7 @@ class CommCodeController(
 
     @Operation(summary = "enumMapper에 등록된 enum 목록 조회")
     @GetMapping("/enums/{names}")
-    fun findByEnums(@PathVariable("names") names: String): ResponseEntity<Map<String, List<EnumValue>?>> {
-        return ResponseEntity.ok(enumMapper[names])
-    }
+    fun findByEnums(@PathVariable("names") names: String): ResponseEntity<Map<String, List<EnumValue>?>> = ResponseEntity.ok(enumMapper[names])
 
 
 }

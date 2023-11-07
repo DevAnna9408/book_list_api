@@ -3,7 +3,6 @@ package kr.co.book.list.api.service.command.book
 import kr.co.book.list.api.dto.book.BookIn
 import kr.co.book.list.api.dto.book.BookOut
 import kr.co.book.list.api.dto.book.BookThumbIn
-import kr.co.book.list.api.dto.bookmark.BookmarkIn
 import kr.co.book.list.api.service.command.user.UserCommandService
 import kr.co.book.list.domain.repository.book.BookRepository
 import kr.co.book.list.domain.repository.book.BookThumbRepository
@@ -20,7 +19,6 @@ class BookCommandService (
 
     private val userRepository: UserRepository,
     private val bookRepository: BookRepository,
-    private val bookmarkRepository: BookmarkRepository,
     private val bookThumbRepository: BookThumbRepository,
     private val userCommandService: UserCommandService
 
@@ -128,6 +126,11 @@ class BookCommandService (
 
     fun getRandomBook(userOid: Long): BookOut {
         SecurityUtil.checkUserOid(userOid)
+
+        /**
+         * findAll() << 시간이 오래 걸리므로
+         * projection으로 refactor 필요
+         * **/
         val dbBooks = bookRepository.findAll()
             .filter { !it.deleted() }
             .map { it.oid }
@@ -138,6 +141,10 @@ class BookCommandService (
     }
 
     fun getRandomBookNoAuth(): BookOut {
+        /**
+         * findAll() << 시간이 오래 걸리므로
+         * projection으로 refactor 필요
+         * **/
         val dbBooks = bookRepository.findAll()
             .filter { !it.deleted() }
             .map { it.oid }

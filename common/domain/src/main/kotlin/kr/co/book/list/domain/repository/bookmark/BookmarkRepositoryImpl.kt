@@ -1,6 +1,5 @@
 package kr.co.book.list.domain.repository.bookmark
 
-import com.querydsl.core.types.dsl.BooleanExpression
 import kr.co.book.list.domain.model.book.Book
 import kr.co.book.list.domain.model.bookmark.Bookmark
 import kr.co.book.list.domain.model.bookmark.QBookmark
@@ -9,6 +8,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.data.support.PageableExecutionUtils
+import java.util.*
 
 class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), BookmarkRepositoryCustom {
 
@@ -41,6 +41,19 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
             .fetchOne()
     }
 
+    override fun getOptionalByUserOidAndBookOid(userOid: Long, bookOid: Long): Optional<Bookmark> {
+        return Optional.ofNullable(
+                from(qBookmark)
+                        .where(
+                                qBookmark.bookmarkUser.oid.eq(userOid),
+                                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
+                                qBookmark.book.deleted.isFalse,
+                                qBookmark.book.oid.eq(bookOid)
+                        )
+                        .fetchOne()
+        )
+    }
+
     override fun getBookOidsWhereBookmark(userOid: Long): List<Bookmark> {
         return from(qBookmark)
             .where(
@@ -49,17 +62,6 @@ class BookmarkRepositoryImpl: QuerydslRepositorySupport(Book::class.java), Bookm
                 qBookmark.bookmarkUser.oid.eq(userOid)
             )
             .fetch()
-    }
-
-    override fun checkIsAlreadyExists(userOid: Long, bookOid: Long): Long {
-        return from(qBookmark)
-            .where(
-                qBookmark.bookmarkUser.oid.eq(userOid),
-                qBookmark.bookmarkUser.status.eq(User.Status.ACTIVE),
-                qBookmark.book.deleted.isFalse,
-                qBookmark.book.oid.eq(bookOid)
-            )
-            .fetchCount()
     }
 
     override fun getByUserOid(userOid: Long): List<Bookmark> {

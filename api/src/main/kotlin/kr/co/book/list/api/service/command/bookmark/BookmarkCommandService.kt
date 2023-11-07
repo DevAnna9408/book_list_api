@@ -24,7 +24,7 @@ class BookmarkCommandService (
         val dbUser = userRepository.getByOid(userOid)
         val dbBook = bookRepository.getByOid(bookOid)
 
-        if (bookmarkRepository.checkIsAlreadyExists(dbUser.oid!!, dbBook.oid!!) > 0) throw RuntimeException(MessageUtil.getMessage("ALREADY_EXIST"))
+        if (bookmarkRepository.getOptionalByUserOidAndBookOid(dbUser.oid!!, dbBook.oid!!).isPresent) throw RuntimeException(MessageUtil.getMessage("ALREADY_EXIST"))
 
         try {
             bookmarkRepository.save(BookmarkIn.toEntity(dbUser, dbBook))

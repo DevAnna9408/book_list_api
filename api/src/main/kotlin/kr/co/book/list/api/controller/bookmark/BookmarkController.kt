@@ -46,19 +46,15 @@ class BookmarkController (
     fun getMyBookmarksByPage (
         @RequestParam("userOid") userOid: Long,
         @ParameterObject pageable: Pageable
-    ): ResponseEntity<Page<BookmarkOut>> {
-        return ResponseEntity.ok(bookmarkQueryService.getMyBookmarksByPage(
+    ): ResponseEntity<Page<BookmarkOut>> = ResponseEntity.ok(bookmarkQueryService.getMyBookmarksByPage(
             userOid,
             pageable
-            ))
-    }
+    ))
 
     @Operation(summary = "로그인 유저 책갈피한 책 oid 조회")
     @GetMapping("/book-oids")
     fun getBookOidsWhereBookmark(
         @RequestParam("userOid") userOid: Long
-    ): ResponseEntity<List<Long>> {
-        return ResponseEntity.ok(bookmarkQueryService.getBookOidsWhereBookmark(userOid))
-    }
+    ): ResponseEntity<List<Long>> = ResponseEntity.ok(bookmarkQueryService.getBookOidsWhereBookmark(userOid))
 
 }

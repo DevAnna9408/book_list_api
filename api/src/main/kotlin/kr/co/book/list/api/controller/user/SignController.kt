@@ -8,7 +8,6 @@ import kr.co.book.list.api.service.command.user.UserLoginService
 import kr.co.book.list.domain._common.EnumMapper
 import kr.co.book.list.domain._common.EnumValue
 import kr.co.book.list.lib.error.InvalidException
-import kr.co.book.list.lib.security.SecurityUtil
 import kr.co.book.list.lib.utils.MessageUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
@@ -25,10 +24,7 @@ class SignController(
 ) {
     @Operation(summary = "회원 가입")
     @PostMapping("/sign-up")
-    fun createMember(@RequestBody signUpIn: SignUpIn): ResponseEntity<UserSimpleOut> {
-        val memberOut = userCommandService.createUser(signUpIn)
-        return ResponseEntity.ok(memberOut)
-    }
+    fun createMember(@RequestBody signUpIn: SignUpIn): ResponseEntity<UserSimpleOut> = ResponseEntity.ok(userCommandService.createUser(signUpIn))
 
     @Operation(summary = "로그인")
     @PostMapping("/sign-in")
@@ -39,18 +35,14 @@ class SignController(
 
     @Operation(summary = "역할 목록 조회")
     @GetMapping("/roles")
-    fun getRoles(): ResponseEntity<Map<String, List<EnumValue>?>> {
-        return ResponseEntity.ok(enumMapper["ROLE"])
-    }
+    fun getRoles(): ResponseEntity<Map<String, List<EnumValue>?>> = ResponseEntity.ok(enumMapper["ROLE"])
 
     @Operation(summary = "비밀번호 질문 찾기")
     @GetMapping("/find-password")
     fun findQuestion(
         @RequestParam("userId") userId: String,
         @RequestParam("nickName") nickName: String
-    ): ResponseEntity<String> {
-        return ResponseEntity.ok(userCommandService.findQuestion(userId, nickName))
-    }
+    ): ResponseEntity<String> = ResponseEntity.ok(userCommandService.findQuestion(userId, nickName))
 
     @Operation(summary = "비밀번호 질문에 대한 답변")
     @PostMapping("/answer-password")
@@ -58,9 +50,7 @@ class SignController(
         @RequestParam("userId") userId: String,
         @RequestParam("nickName") nickName: String,
         @RequestParam("answer") answer: String
-    ): ResponseEntity<Boolean> {
-        return ResponseEntity.ok(userCommandService.answerPassword(userId, nickName, answer))
-    }
+    ): ResponseEntity<Boolean> = ResponseEntity.ok(userCommandService.answerPassword(userId, nickName, answer))
 
     @Operation(summary = "비밀번호 재설정")
     @PutMapping("/change-password/{userId}")

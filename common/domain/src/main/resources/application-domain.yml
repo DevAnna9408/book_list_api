@@ -34,61 +34,7 @@ spring:
     properties.hibernate:
       format_sql: false
     hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-
-
---- # test모드
-spring:
-  config:
-    activate:
-      on-profile: "test"
-  datasource:
-    url:
-    username:
-    password:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    jpa:
-      properties.hibernate:
-      hibernate:
-        ddl-auto: none
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-  decorator:
-    datasource:
-      p6spy:
-        enable-logging: false
-
-
---- # product 운영모드
-spring:
-  config:
-    activate:
-      on-profile: "product"
-  datasource:
-    url: jdbc:mysql://localhost:3306/book_list_product?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull
-    username: anna
-    password: anna
-    driverClassName: com.mysql.cj.jdbc.Driver
-  jpa:
-    properties.hibernate:
-    hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: false
-
-
---- # initdb
-spring:
-  config:
-    activate:
-      on-profile: "initdb"
